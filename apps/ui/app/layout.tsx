@@ -27,7 +27,13 @@ export default function RootLayout({
     >
       <body>
         <ServiceWorkerRegister />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <main className="flex h-svh w-full justify-start md:justify-center">
+            <div className="w-full max-w-md">
+              {children}
+            </div>
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   )
