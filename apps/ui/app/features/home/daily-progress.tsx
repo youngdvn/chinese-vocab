@@ -39,7 +39,7 @@ export default function DailyProgress() {
     const progress =
         totalCount > 0 ? (learnedCount / totalCount) * 100 : 0
     return (
-        <section className="flex flex-col gap-4 p-4">
+        <section className="flex flex-col gap-4 px-4">
             <div>
                 <h2 className="text-lg font-semibold tracking-tight text-primary">
                     Daily Progress

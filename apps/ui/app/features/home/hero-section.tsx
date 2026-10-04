@@ -3,7 +3,7 @@ import { Progress } from "@workspace/ui/components/progress";
 
 export default function HeroSection() {
     return (
-        <section className="relative overflow-hidden rounded-2xl border bg-card p-5 shadow-sm">
+        <section className="relative overflow-hidden rounded-xl border bg-card p-5 shadow-sm">
             {/* Background decoration */}
             <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
 

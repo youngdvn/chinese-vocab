@@ -7,7 +7,7 @@ export default function ReviewPage() {
     const [showAnswer, setShowAnswer] = useState(false)
 
     return (
-        <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-2xl flex-col items-center justify-center gap-6 p-4">
+        <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col items-center justify-center gap-6 py-4 px-16">
             <div className="w-full text-center">
                 <p className="text-sm text-muted-foreground">
                     12 cards remaining
@@ -44,15 +44,15 @@ export default function ReviewPage() {
 
             {showAnswer && (
                 <div className="grid w-full grid-cols-3 gap-3">
-                    <button className="rounded-xl border py-3 text-sm hover:bg-muted">
+                    <button className="rounded-lg border py-2 text-sm hover:bg-muted">
                         Hard
                     </button>
 
-                    <button className="rounded-xl bg-primary py-3 text-sm text-primary-foreground">
+                    <button className="rounded-lg bg-primary py-2 text-sm text-primary-foreground">
                         Good
                     </button>
 
-                    <button className="rounded-xl border py-3 text-sm hover:bg-muted">
+                    <button className="rounded-lg border py-2 text-sm hover:bg-muted">
                         Easy
                     </button>
                 </div>
