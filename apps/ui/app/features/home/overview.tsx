@@ -2,7 +2,7 @@ import { overviewData } from "@/constant/data";
 
 export default function Overview() {
     return (
-        <section className="flex flex-col gap-4 p-4">
+        <section className="flex flex-col gap-4 px-4">
             <h2 className="text-lg font-semibold tracking-tight text-primary">
                 Overview
             </h2>
