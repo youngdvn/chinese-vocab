@@ -278,7 +278,7 @@ export default function VocabularyPage() {
 
                 {hasFilters && (
                     <Button
-                        variant="ghost"
+                        variant="destructive"
                         size="sm"
                         onClick={handleClearFilters}
                         className="w-full"
