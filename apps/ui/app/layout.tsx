@@ -4,6 +4,7 @@ import "@workspace/ui/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@workspace/ui/lib/utils";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistMonoHeading = Geist_Mono({ subsets: ['latin'], variable: '--font-heading' });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body>
         <ServiceWorkerRegister />
         <ThemeProvider>
+          <Analytics />
           <main className="flex h-svh w-full justify-start md:justify-center">
             <div className="w-full max-w-md">
               {children}
