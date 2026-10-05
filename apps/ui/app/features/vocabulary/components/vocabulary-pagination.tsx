@@ -24,6 +24,15 @@ export function VocabularyPagination({
         return null
     }
 
+    const handlePageChange = (page: number) => {
+        onPageChange(page)
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
+    }
+
     return (
         <Pagination>
             <PaginationContent>
@@ -39,7 +48,7 @@ export function VocabularyPagination({
                             e.preventDefault()
 
                             if (currentPage > 1) {
-                                onPageChange(currentPage - 1)
+                                handlePageChange(currentPage - 1)
                             }
                         }}
                     />
@@ -55,7 +64,7 @@ export function VocabularyPagination({
                             isActive={currentPage === page}
                             onClick={(e) => {
                                 e.preventDefault()
-                                onPageChange(page)
+                                handlePageChange(page)
                             }}
                         >
                             {page}
@@ -75,7 +84,7 @@ export function VocabularyPagination({
                             e.preventDefault()
 
                             if (currentPage < totalPages) {
-                                onPageChange(currentPage + 1)
+                                handlePageChange(currentPage + 1)
                             }
                         }}
                     />
