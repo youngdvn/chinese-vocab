@@ -21,7 +21,7 @@ export default function SettingTheme() {
             <RadioGroup
                 value={theme}
                 onValueChange={setTheme}
-                className="grid grid-cols-1 gap-3 sm:grid-cols-3"
+                className="grid grid-cols-1 gap-3"
             >
                 <ThemeOption
                     value="light"
