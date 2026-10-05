@@ -1,3 +1,4 @@
+import { WordAudio } from "@/components/word-audio"
 import { IconCheck } from "@tabler/icons-react"
 
 interface Vocabulary {
@@ -48,9 +49,10 @@ export function VocabularyList({
                                 {word.createdAt}
                             </p>
                         </div>
+                        <WordAudio word={word.chinese} />
                     </div>
 
-                    {word.learned && (
+                    {/* {word.learned && (
                         <div className="ml-4 flex shrink-0 items-center gap-1 text-sm text-primary">
                             <IconCheck size={16} />
 
@@ -58,7 +60,7 @@ export function VocabularyList({
                                 Learned
                             </span>
                         </div>
-                    )}
+                    )} */}
                 </div>
             ))}
 
