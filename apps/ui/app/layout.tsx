@@ -26,9 +26,9 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn("antialiased", fontMono.variable, "font-sans", ibmPlexSans.variable, geistMonoHeading.variable)}
     >
-      <body>
-        <ServiceWorkerRegister />
+      <body suppressHydrationWarning>
         <ThemeProvider>
+          <ServiceWorkerRegister />
           <Analytics />
           <main className="flex h-svh w-full justify-start md:justify-center">
             <div className="w-full max-w-md">

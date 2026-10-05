@@ -1,42 +1,10 @@
+import { settings } from "@/constant/data"
 import {
     IconChevronRight,
-    IconDatabaseExport,
-    IconMoon,
-    IconTarget,
 } from "@tabler/icons-react"
+import Link from "next/link"
 
-const settings = [
-    {
-        title: "Appearance",
-        items: [
-            {
-                label: "Theme",
-                description: "System",
-                icon: IconMoon,
-            },
-        ],
-    },
-    {
-        title: "Learning",
-        items: [
-            {
-                label: "Daily goal",
-                description: "20 words per day",
-                icon: IconTarget,
-            },
-        ],
-    },
-    {
-        title: "Data",
-        items: [
-            {
-                label: "Export vocabulary",
-                description: "Export your vocabulary data",
-                icon: IconDatabaseExport,
-            },
-        ],
-    },
-]
+
 
 export default function SettingPage() {
     return (
@@ -59,13 +27,13 @@ export default function SettingPage() {
                             const Icon = item.icon
 
                             return (
-                                <button
+                                <Link href={item.href}
                                     key={item.label}
                                     className="group flex w-full items-center gap-4 p-4 text-left transition hover:bg-muted"
                                 >
                                     <Icon
                                         size={20}
-                                        className="text-muted-foreground group-hover:text-primary"
+                                        className="text-primary"
                                     />
 
                                     <div className="flex-1">
@@ -81,7 +49,7 @@ export default function SettingPage() {
                                         size={18}
                                         className="text-muted-foreground"
                                     />
-                                </button>
+                                </Link>
                             )
                         })}
                     </div>

@@ -1,6 +1,4 @@
-import { IconBook2, IconLayout, IconScanEye, IconSettings } from "@tabler/icons-react"
-
-
+import { IconBook2, IconBrightness, IconDatabaseExport, IconLayout, IconScanEye, IconSettings, IconTarget } from "@tabler/icons-react"
 
 export const overviewData = [
     { id: 1, label: "Total Words", quantity: 320 },
@@ -449,5 +447,87 @@ export const words = [
         learned: true,
         toReview: false,
         createdAt: "2026-09-20",
+    },
+]
+
+export const statusFilters = [
+    {
+        label: "All",
+        value: "all",
+    },
+    {
+        label: "Learning",
+        value: "learning",
+    },
+    {
+        label: "Learned",
+        value: "learned",
+    },
+    {
+        label: "Review",
+        value: "review",
+    },
+]
+
+export const dateFilters = [
+    {
+        label: "All dates",
+        value: "all",
+    },
+    {
+        label: "Today",
+        value: "2026-10-04",
+    },
+    {
+        label: "Yesterday",
+        value: "2026-10-03",
+    },
+    {
+        label: "Oct 2, 2026",
+        value: "2026-10-02",
+    },
+    {
+        label: "Oct 1, 2026",
+        value: "2026-10-01",
+    },
+    {
+        label: "Sep 30, 2026",
+        value: "2026-09-30",
+    },
+]
+
+export const settings = [
+    {
+        title: "Appearance",
+        items: [
+            {
+                label: "Theme",
+                href: "/setting/theme",
+                description: "System",
+                icon: IconBrightness,
+            },
+        ],
+    },
+    {
+        title: "Learning",
+        items: [
+            {
+                label: "Daily goal",
+                href: "/setting/theme",
+                description: "20 words per day",
+                icon: IconTarget,
+            },
+        ],
+    },
+    {
+        title: "Data",
+        items: [
+            {
+                label: "Export vocabulary",
+                href: "/setting/theme",
+                description: "Export your vocabulary data",
+                icon: IconDatabaseExport,
+            },
+        ],
     },
 ]

@@ -1,14 +1,13 @@
 import { Button } from "@workspace/ui/components/button";
 import { Progress } from "@workspace/ui/components/progress";
+import Link from "next/link";
 
 export default function HeroSection() {
     return (
         <section className="relative overflow-hidden rounded-xl border bg-card p-5 shadow-sm">
-            {/* Background decoration */}
             <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
 
             <div className="relative flex flex-col gap-5">
-                {/* Header */}
                 <div className="flex items-start justify-between">
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -28,8 +27,6 @@ export default function HeroSection() {
                         学
                     </div>
                 </div>
-
-                {/* Progress */}
                 <div className="rounded-xl bg-muted/50 p-4">
                     <div className="flex items-end justify-between">
                         <div>
@@ -61,10 +58,11 @@ export default function HeroSection() {
                     </p>
                 </div>
 
-                {/* Action */}
-                <Button className="w-full">
-                    Continue Learning
-                </Button>
+                <Link href={"/vocabulary"}>
+                    <Button className="w-full">
+                        Continue Learning
+                    </Button>
+                </Link>
             </div>
         </section>
     )
