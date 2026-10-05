@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import SidebarDrawer from "./sidebar-drawer"
 import Link from "next/link"
+import ThemeToggle from "@/components/theme-toggle"
 
 export default function HeaderLayout() {
     const [isScrolled, setIsScrolled] = useState(false)
@@ -29,7 +30,10 @@ export default function HeaderLayout() {
                 <h1 className="text-lg font-semibold text-primary">
                     <Link href={"/"}>ChiNex</Link>
                 </h1>
-                <SidebarDrawer />
+                <div className="flex items-center gap-2">
+                    <ThemeToggle />
+                    <SidebarDrawer />
+                </div>
             </div>
         </header >
     )
