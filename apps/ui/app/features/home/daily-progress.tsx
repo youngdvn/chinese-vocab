@@ -1,43 +1,42 @@
 "use client"
 
 import { dailyVocab } from "@/constant/data"
-import { Button } from "@workspace/ui/components/button"
 import { Progress } from "@workspace/ui/components/progress"
 import { useState } from "react"
 
 export default function DailyProgress() {
     const [statusVocab, setStatusVocab] = useState(dailyVocab)
 
-    const toggleLearned = (id: number) => {
-        setStatusVocab((prev) =>
-            prev.map((item) =>
-                item.id === id
-                    ? {
-                        ...item,
-                        learned: !item.learned,
-                    }
-                    : item
-            )
-        )
-    }
+    // const toggleLearned = (id: number) => {
+    //     setStatusVocab((prev) =>
+    //         prev.map((item) =>
+    //             item.id === id
+    //                 ? {
+    //                     ...item,
+    //                     learned: !item.learned,
+    //                 }
+    //                 : item
+    //         )
+    //     )
+    // }
 
-    const toggleToReview = (id: number) => {
-        setStatusVocab((prev) =>
-            prev.map((item) =>
-                item.id === id
-                    ? {
-                        ...item,
-                        toReview: !item.toReview,
-                    }
-                    : item
-            )
-        )
-    }
+    // const toggleToReview = (id: number) => {
+    //     setStatusVocab((prev) =>
+    //         prev.map((item) =>
+    //             item.id === id
+    //                 ? {
+    //                     ...item,
+    //                     toReview: !item.toReview,
+    //                 }
+    //                 : item
+    //         )
+    //     )
+    // }
 
-    const learnedCount = statusVocab.filter((item) => item.learned).length
+    const learningCount = statusVocab.filter((item) => item.status === "learning").length
     const totalCount = statusVocab.length
     const progress =
-        totalCount > 0 ? (learnedCount / totalCount) * 100 : 0
+        totalCount > 0 ? (learningCount / totalCount) * 100 : 0
     return (
         <section className="flex flex-col gap-4 px-4">
             <div>
@@ -52,7 +51,7 @@ export default function DailyProgress() {
                         </p>
 
                         <p className="text-sm font-semibold">
-                            {learnedCount} / {totalCount}
+                            {learningCount} / {totalCount}
                         </p>
                     </div>
 
