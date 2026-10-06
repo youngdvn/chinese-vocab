@@ -1,6 +1,18 @@
+"use client"
+
 import { IconPlus } from "@tabler/icons-react"
 
 import { Button } from "@workspace/ui/components/button"
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogTrigger,
+} from "@workspace/ui/components/dialog"
+import { AddVocabularyForm } from "./add-vocabulary-form"
+
 
 export function VocabularyHeader() {
     return (
@@ -15,10 +27,28 @@ export function VocabularyHeader() {
                 </p>
             </div>
 
-            <Button>
-                <IconPlus size={17} />
-                Add
-            </Button>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button>
+                        <IconPlus size={17} />
+                        Add
+                    </Button>
+                </DialogTrigger>
+
+                <DialogContent className="max-w-xs">
+                    <DialogHeader>
+                        <DialogTitle>
+                            Add vocabulary
+                        </DialogTitle>
+
+                        <DialogDescription>
+                            Add a new Chinese word to your vocabulary.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <AddVocabularyForm />
+                </DialogContent>
+
+            </Dialog>
         </div>
     )
 }
