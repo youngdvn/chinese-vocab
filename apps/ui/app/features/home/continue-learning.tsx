@@ -30,7 +30,7 @@ export default function ContinueLearning() {
                 </Link>
 
                 <Link
-                    href="/review"
+                    href="/practice"
                     className="group flex items-center gap-3 rounded-xl border p-4 transition hover:bg-muted"
                 >
                     <IconBrain className="text-primary" />

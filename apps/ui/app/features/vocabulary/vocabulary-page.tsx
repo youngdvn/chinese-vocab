@@ -25,9 +25,8 @@ export function VocabularyPage() {
 
         const matchesStatus =
             status === "all" ||
-            (status === "learned" && word.learned) ||
-            (status === "learning" && !word.learned) ||
-            (status === "review" && word.toReview)
+            (status === "new" && word.status === "new") ||
+            (status === "learning" && word.status === "learning")
 
         const matchesDate =
             date === "all" ||
