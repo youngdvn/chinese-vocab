@@ -2,10 +2,9 @@
 
 import { dailyVocab } from "@/constant/data"
 import { Progress } from "@workspace/ui/components/progress"
-import { useState } from "react"
 
 export default function DailyProgress() {
-    const [statusVocab, setStatusVocab] = useState(dailyVocab)
+    // const [statusVocab, setStatusVocab] = useState(dailyVocab)
 
     // const toggleLearned = (id: number) => {
     //     setStatusVocab((prev) =>
@@ -33,8 +32,8 @@ export default function DailyProgress() {
     //     )
     // }
 
-    const learningCount = statusVocab.filter((item) => item.status === "learning").length
-    const totalCount = statusVocab.length
+    const learningCount = dailyVocab.filter((item) => item.status === "learning").length
+    const totalCount = dailyVocab.length
     const progress =
         totalCount > 0 ? (learningCount / totalCount) * 100 : 0
     return (
@@ -63,7 +62,7 @@ export default function DailyProgress() {
             </div>
 
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3">
-                {statusVocab.map((item) => (
+                {dailyVocab.map((item) => (
                     <div
                         key={item.id}
                         className="flex flex-col items-center gap-2 rounded-lg border bg-card p-4 shadow-sm transition-all hover:-translate-y-0. hover:shadow-md"

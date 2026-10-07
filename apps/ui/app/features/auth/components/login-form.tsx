@@ -6,20 +6,24 @@ import { useState } from "react"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { Label } from "@workspace/ui/components/label"
+import { IconEye, IconEyeClosed } from "@tabler/icons-react"
 
 export function LoginForm() {
     const [showPassword, setShowPassword] = useState(false)
 
     return (
         <div className="space-y-6">
-            <div className="space-y-2 text-center">
-                <h1 className="text-2xl font-bold tracking-tight">
-                    Welcome back
-                </h1>
+            <div className="mb-8 text-center">
 
-                <p className="text-sm text-muted-foreground">
-                    Sign in to continue learning Chinese
-                </p>
+                <div className="space-y-2">
+                    <h1 className="text-3xl font-bold tracking-tight">
+                        Welcome back
+                    </h1>
+
+                    <p className="text-sm leading-6 text-muted-foreground">
+                        Pick up where you left off and keep learning Chinese.
+                    </p>
+                </div>
             </div>
 
             <form className="space-y-4">
@@ -68,9 +72,9 @@ export function LoginForm() {
                             onClick={() =>
                                 setShowPassword(!showPassword)
                             }
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-background"
                         >
-                            {showPassword ? "Hide" : "Show"}
+                            {showPassword ? (<IconEye size={16} />) : (<IconEyeClosed size={16} />)}
                         </button>
                     </div>
                 </div>
