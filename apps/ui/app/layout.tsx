@@ -5,14 +5,14 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@workspace/ui/lib/utils";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import { Analytics } from "@vercel/analytics/next";
+import { Toaster } from "@workspace/ui/components/sonner";
 
 const geistMonoHeading = Geist_Mono({ subsets: ['latin'], variable: '--font-heading' });
 
 const ibmPlexSans = IBM_Plex_Sans({ subsets: ['latin'], variable: '--font-sans' })
 
 const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
+  subsets: ["latin"], variable: "--font-mono",
 })
 
 export default function RootLayout({
@@ -35,6 +35,7 @@ export default function RootLayout({
               {children}
             </div>
           </main>
+          <Toaster position="top-right" richColors />
         </ThemeProvider>
       </body>
     </html>

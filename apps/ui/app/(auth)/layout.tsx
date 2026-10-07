@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { IconBrain, IconSparkle } from "@tabler/icons-react"
+import { IconSparkle } from "@tabler/icons-react"
 import AuthBackground from "../features/auth/components/auth-background"
 
 export default function AuthLayout({
@@ -8,7 +8,7 @@ export default function AuthLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className="relative min-h-screen overflow-hidden bg-[#050505] text-white">
+        <main className="relative min-h-screen overflow-hidden bg-[#050505] text-foreground">
             <AuthBackground />
 
             <header className="relative z-10 flex h-16 items-center px-6">
