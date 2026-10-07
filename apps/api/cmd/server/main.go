@@ -7,6 +7,8 @@ import (
 	"net/http"
 
 	"github.com/duycao04/chinese-vocab/apps/api/internal/database"
+	"github.com/duycao04/chinese-vocab/apps/api/internal/middleware"
+	"github.com/duycao04/chinese-vocab/apps/api/internal/modules/auth"
 	"github.com/duycao04/chinese-vocab/apps/api/internal/modules/vocabulary"
 	"github.com/joho/godotenv"
 )
@@ -40,24 +42,22 @@ func main() {
 
 	// Vocabulary module
 	vocabularyRepository := vocabulary.NewRepository(db)
+	vocabularyService := vocabulary.NewService(vocabularyRepository)
+	vocabularyHandler := vocabulary.NewHandler(vocabularyService)
 
-	vocabularyService := vocabulary.NewService(
-		vocabularyRepository,
-	)
+	vocabulary.RegisterRoutes(mux, vocabularyHandler)
 
-	vocabularyHandler := vocabulary.NewHandler(
-		vocabularyService,
-	)
+	authRepository := auth.NewRepository(db)
+	authService := auth.NewService(authRepository)
+	authHandler := auth.NewHandler(authService)
 
-	vocabulary.RegisterRoutes(
-		mux,
-		vocabularyHandler,
-	)
+	auth.RegisterRoutes(mux, authHandler)
 
-	fmt.Println("Server is running at http://localhost:8080")
+	handler := middleware.CORS(mux)
 
-	err = http.ListenAndServe(":8080", mux)
-	if err != nil {
+	log.Println("Server running on :8080")
+
+	if err := http.ListenAndServe(":8080", handler); err != nil {
 		log.Fatal(err)
 	}
 }
