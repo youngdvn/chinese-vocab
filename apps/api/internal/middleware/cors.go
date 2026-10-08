@@ -4,10 +4,17 @@ import "net/http"
 
 func CORS(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set(
-			"Access-Control-Allow-Origin",
-			"http://localhost:2611",
-		)
+		allowedOrigins := map[string]bool{
+			"http://localhost:2611":                 true,
+			"http://localhost:3000":                 true,
+			"https://chinese-vocab-self.vercel.app": true,
+		}
+
+		origin := r.Header.Get("Origin")
+
+		if allowedOrigins[origin] {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+		}
 
 		w.Header().Set(
 			"Access-Control-Allow-Methods",
