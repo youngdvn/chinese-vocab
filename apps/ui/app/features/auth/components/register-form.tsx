@@ -30,8 +30,10 @@ export function RegisterForm() {
     })
 
     async function onSubmit(values: RegisterFormValues) {
+        setLoading(true)
+        setServerError("")
         try {
-            setLoading(true)
+
             const user = await register({
                 name: values.name,
                 email: values.email,

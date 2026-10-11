@@ -1,4 +1,3 @@
-
 package auth
 
 import (
@@ -61,4 +60,3 @@ func writeJSON(w http.ResponseWriter, status int, data any) {
 		log.Printf("encode JSON response error: %v", err)
 	}
 }
-```
