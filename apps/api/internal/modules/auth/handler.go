@@ -5,18 +5,24 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"os"
+	"time"
 )
 
 type Handler struct {
-	service *Service
+	service      *Service
+	tokenService *TokenService
 }
 
-func NewHandler(service *Service) *Handler {
+func NewHandler(
+	service *Service,
+	tokenService *TokenService,
+) *Handler {
 	return &Handler{
-		service: service,
+		service:      service,
+		tokenService: tokenService,
 	}
 }
-
 func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
@@ -59,4 +65,74 @@ func writeJSON(w http.ResponseWriter, status int, data any) {
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		log.Printf("encode JSON response error: %v", err)
 	}
+}
+
+func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]string{
+			"message": "Method Not Allowed",
+		})
+		return
+	}
+
+	var req LoginRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{
+			"message": "Dữ liệu gửi lên không hợp lệ",
+		})
+		return
+	}
+
+	user, err := h.service.Login(r.Context(), req)
+	if err != nil {
+		if errors.Is(err, ErrInvalidCredentials) {
+			writeJSON(w, http.StatusUnauthorized, map[string]string{
+				"message": "Email hoặc mật khẩu không chính xác",
+			})
+			return
+		}
+
+		log.Printf("login error: %v", err)
+		writeJSON(w, http.StatusInternalServerError, map[string]string{
+			"message": "Đã xảy ra lỗi hệ thống",
+		})
+		return
+	}
+
+	if h.tokenService == nil {
+		log.Printf("token service is not configured")
+		writeJSON(w, http.StatusInternalServerError, map[string]string{
+			"message": "Chưa cấu hình dịch vụ xác thực",
+		})
+		return
+	}
+
+	token, expiresAt, err := h.tokenService.Generate(user.ID)
+	if err != nil {
+		log.Printf("generate token error: %v", err)
+		writeJSON(w, http.StatusInternalServerError, map[string]string{
+			"message": "Không thể tạo phiên đăng nhập",
+		})
+		return
+	}
+
+	secure := os.Getenv("APP_ENV") == "production"
+
+	sameSite := http.SameSiteLaxMode
+	if secure {
+		sameSite = http.SameSiteNoneMode
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "access_token",
+		Value:    token,
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   secure,
+		SameSite: sameSite,
+		Expires:  expiresAt,
+		MaxAge:   int(time.Until(expiresAt).Seconds()),
+	})
+
+	writeJSON(w, http.StatusOK, user)
 }

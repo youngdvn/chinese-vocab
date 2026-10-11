@@ -69,3 +69,28 @@ func (r *Repository) CreateUser(
 
 	return user, nil
 }
+
+func (r *Repository) FindUserByEmail(
+	ctx context.Context,
+	email string,
+) (*User, error) {
+	user := &User{}
+
+	err := r.db.QueryRow(ctx, `
+        SELECT id, email, password_hash, name, created_at, updated_at
+        FROM users
+        WHERE email = $1
+    `, email).Scan(
+		&user.ID,
+		&user.Email,
+		&user.PasswordHash,
+		&user.Name,
+		&user.CreatedAt,
+		&user.UpdatedAt,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
