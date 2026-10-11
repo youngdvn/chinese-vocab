@@ -46,9 +46,14 @@ func main() {
 
 	vocabulary.RegisterRoutes(mux, vocabularyHandler)
 
+	tokenService, err := auth.NewTokenService()
+	if err != nil {
+		log.Fatalf("failed to initialize token service: %v", err)
+	}
+
 	authRepository := auth.NewRepository(db)
 	authService := auth.NewService(authRepository)
-	authHandler := auth.NewHandler(authService)
+	authHandler := auth.NewHandler(authService, tokenService)
 
 	auth.RegisterRoutes(mux, authHandler)
 
