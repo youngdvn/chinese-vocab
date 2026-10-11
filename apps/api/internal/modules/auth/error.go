@@ -1,0 +1,5 @@
+package auth
+
+import "errors"
+
+var ErrEmailExists = errors.New("email already exists")
