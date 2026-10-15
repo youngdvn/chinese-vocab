@@ -8,6 +8,7 @@ import {
     IconCheck,
     IconHelpCircle,
     IconKeyboard,
+    IconPlus,
     IconRefresh,
     IconTrophy,
 } from "@tabler/icons-react"
@@ -16,6 +17,8 @@ import { Input } from "@workspace/ui/components/input"
 import { Badge } from "@workspace/ui/components/badge"
 import { Card, CardContent } from "@workspace/ui/components/card"
 import { Progress } from "@workspace/ui/components/progress"
+import { Skeleton } from "@workspace/ui/components/skeleton"
+import { EmptyState } from "@/components/empty-state"
 import { WordAudio } from "@/components/word-audio"
 import { getVocabularies } from "@/services/vocabulary.service"
 import { submitReview } from "@/services/review.service"
@@ -90,10 +93,10 @@ export default function PinyinPracticePage() {
         if (correct) {
             setScore((s) => s + 1)
             toast.success("Chính xác! Giỏi lắm 🎉")
-            submitReview({ vocabulary_id: currentWord.id, rating: 2 }).catch(() => {})
+            submitReview({ vocabulary_id: currentWord.id, rating: 2 }).catch(() => { })
         } else {
             toast.error(`Chưa đúng rồi! Pinyin chuẩn là: ${currentWord.pinyin}`)
-            submitReview({ vocabulary_id: currentWord.id, rating: 1 }).catch(() => {})
+            submitReview({ vocabulary_id: currentWord.id, rating: 1 }).catch(() => { })
         }
     }
 
@@ -111,9 +114,34 @@ export default function PinyinPracticePage() {
 
     if (isLoading) {
         return (
-            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col items-center justify-center gap-4 px-4 text-center">
-                <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                <p className="text-sm text-muted-foreground">Đang chuẩn bị bài luyện viết Pinyin...</p>
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
+                <PracticeNav />
+
+                {/* Header Skeleton */}
+                <div className="flex items-center justify-between">
+                    <Skeleton className="h-3.5 w-20 rounded-md" />
+                    <div className="flex flex-col items-center gap-1">
+                        <Skeleton className="h-4 w-28 rounded-md" />
+                        <Skeleton className="h-3 w-16 rounded-md" />
+                    </div>
+                    <Skeleton className="h-5 w-16 rounded-full" />
+                </div>
+
+                {/* Progress */}
+                <Skeleton className="h-1.5 w-full rounded-full" />
+
+                {/* Word Card Skeleton */}
+                <Card className="relative overflow-hidden text-center py-12 px-4 flex flex-col items-center justify-center gap-3">
+                    <Skeleton className="size-9 rounded-lg absolute top-3 right-3" />
+                    <Skeleton className="h-16 w-36 rounded-xl" />
+                    <Skeleton className="h-5 w-44 rounded-md mt-2" />
+                </Card>
+
+                {/* Input & Action Skeleton */}
+                <div className="flex flex-col gap-3">
+                    <Skeleton className="h-11 w-full rounded-lg" />
+                    <Skeleton className="h-10 w-full rounded-lg" />
+                </div>
             </main>
         )
     }
@@ -162,6 +190,27 @@ export default function PinyinPracticePage() {
                         </Button>
                     </Link>
                 </div>
+            </main>
+        )
+    }
+
+    if (words.length === 0) {
+        return (
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
+                <PracticeNav />
+                <EmptyState
+                    // icon={<IconKeyboard size={28} />}
+                    title="Chưa có từ vựng để luyện gõ Pinyin"
+                    description="Hãy thêm các từ vựng mới vào kho từ để bắt đầu luyện phản xạ gõ phiên âm tiếng Trung."
+                    action={
+                        <Link href="/vocabulary">
+                            <Button className="gap-1.5 h-9">
+                                <IconPlus size={16} />
+                                Thêm từ vựng ngay
+                            </Button>
+                        </Link>
+                    }
+                />
             </main>
         )
     }
@@ -228,13 +277,12 @@ export default function PinyinPracticePage() {
                         }}
                         disabled={isEvaluated}
                         autoFocus
-                        className={`h-12 text-center text-lg font-medium transition-all ${
-                            isEvaluated
+                        className={`h-12 text-center text-lg font-medium transition-all ${isEvaluated
                                 ? isCorrect
                                     ? "border-emerald-500 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
                                     : "border-destructive bg-destructive/10 text-destructive"
                                 : ""
-                        }`}
+                            }`}
                     />
                 </div>
 

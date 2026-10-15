@@ -1,5 +1,8 @@
 "use client"
 
+import { Skeleton } from "@workspace/ui/components/skeleton"
+import { EmptyState } from "@/components/empty-state"
+import { IconBook2 } from "@tabler/icons-react"
 import { VocabularyCard } from "./vocabulary-card"
 import type { Vocabulary } from "@/types/vocabulary"
 
@@ -20,10 +23,27 @@ export function VocabularyList({
 }: VocabularyListProps) {
     if (isLoading) {
         return (
-            <div className="flex flex-col gap-3 py-8 text-center">
-                <div className="mx-auto size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                <p className="text-sm text-muted-foreground">Đang tải danh sách từ vựng...</p>
-            </div>
+            <section className="flex flex-col gap-3">
+                <div className="flex justify-end">
+                    <Skeleton className="h-4 w-32 rounded-md" />
+                </div>
+
+                {Array.from({ length: 6 }).map((_, idx) => (
+                    <div
+                        key={idx}
+                        className="rounded-xl border bg-card p-4 shadow-xs"
+                    >
+                        <div className="flex items-center justify-between gap-4">
+                            <Skeleton className="h-7 w-20 rounded-md" />
+                            <div className="flex items-center gap-2">
+                                <Skeleton className="size-8 rounded-lg" />
+                                <Skeleton className="size-8 rounded-lg" />
+                                <Skeleton className="size-8 rounded-lg" />
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </section>
         )
     }
 
@@ -43,15 +63,11 @@ export function VocabularyList({
             ))}
 
             {words.length === 0 && (
-                <div className="rounded-xl border border-dashed p-10 text-center">
-                    <p className="font-medium">
-                        Không tìm thấy từ vựng nào
-                    </p>
-
-                    <p className="mt-1 text-sm text-muted-foreground">
-                        Hãy thử tìm kiếm với từ khóa khác hoặc thêm từ vựng mới vào kho.
-                    </p>
-                </div>
+                <EmptyState
+                    // icon={<IconBook2 size={24} />}
+                    title="Không tìm thấy từ vựng nào"
+                    description="Hãy thử tìm kiếm với từ khóa khác hoặc thêm từ vựng mới vào kho từ cá nhân của bạn."
+                />
             )}
         </section>
     )
