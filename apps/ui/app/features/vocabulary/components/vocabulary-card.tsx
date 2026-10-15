@@ -54,7 +54,7 @@ export function VocabularyCard({ word, onDelete, onUpdate }: VocabularyCardProps
             },
             cancel: {
                 label: "Huỷ",
-                onClick: () => {},
+                onClick: () => { },
             },
         })
     }
@@ -110,7 +110,7 @@ export function VocabularyCard({ word, onDelete, onUpdate }: VocabularyCardProps
                 </div>
 
                 <div className="flex items-center gap-1.5 sm:gap-3">
-                    <Badge
+                    {/* <Badge
                         variant={
                             word.status === "new"
                                 ? "default"
@@ -121,7 +121,7 @@ export function VocabularyCard({ word, onDelete, onUpdate }: VocabularyCardProps
                         className="h-5 px-2 text-[10px]"
                     >
                         {word.status === "new" ? "Mới" : word.status === "mastered" ? "Thành thạo" : "Đang học"}
-                    </Badge>
+                    </Badge> */}
 
                     <WordAudio word={chineseText} />
 
@@ -161,7 +161,7 @@ export function VocabularyCard({ word, onDelete, onUpdate }: VocabularyCardProps
             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                 <DialogContent className="max-w-xs sm:max-w-md">
                     <DialogHeader>
-                        <DialogTitle>Chỉnh sửa từ vựng</DialogTitle>
+                        <Label>Chỉnh sửa từ vựng</Label>
                     </DialogHeader>
 
                     <div className="flex flex-col gap-3 py-2">

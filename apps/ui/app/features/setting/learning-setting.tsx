@@ -11,7 +11,6 @@ import {
     DialogDescription,
     DialogFooter,
     DialogHeader,
-    DialogTitle,
 } from "@workspace/ui/components/dialog"
 import { Input } from "@workspace/ui/components/input"
 import { Label } from "@workspace/ui/components/label"
@@ -82,19 +81,19 @@ export function LearningSetting({ settings, onUpdated }: LearningSettingProps) {
             <Dialog open={isGoalDialogOpen} onOpenChange={setIsGoalDialogOpen}>
                 <DialogContent className="max-w-xs sm:max-w-sm">
                     <DialogHeader>
-                        <DialogTitle>Mục tiêu học hàng ngày</DialogTitle>
+                        <Label>Mục tiêu</Label>
                         <DialogDescription>
                             Đặt số lượng từ vựng bạn muốn học và ôn tập mỗi ngày.
                         </DialogDescription>
                     </DialogHeader>
 
                     <div className="flex flex-col gap-3 py-2">
-                        <Label htmlFor="goal">Số từ mỗi ngày (1 - 200)</Label>
+                        <Label htmlFor="goal">Số từ mỗi ngày (1 - 100)</Label>
                         <Input
                             id="goal"
                             type="number"
                             min={1}
-                            max={200}
+                            max={100}
                             value={goalInput}
                             onChange={(e) => setGoalInput(e.target.value)}
                         />

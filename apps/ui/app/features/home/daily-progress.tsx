@@ -4,6 +4,7 @@ import { Progress } from "@workspace/ui/components/progress"
 import { Badge } from "@workspace/ui/components/badge"
 import { WordAudio } from "@/components/word-audio"
 import type { DailyProgress as DailyProgressType } from "@/types/dashboard.types"
+import Link from "next/link"
 
 interface DailyProgressProps {
     progress?: DailyProgressType | null
@@ -18,9 +19,20 @@ export function DailyProgress({ progress }: DailyProgressProps) {
     return (
         <section className="flex flex-col gap-4 px-4">
             <div>
-                <h2 className="text-lg font-semibold tracking-tight text-primary">
-                    Tiến độ học hôm nay
-                </h2>
+                <div className="mb-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                        <h2 className="font-semibold text-lg tracking-tight text-primary">
+                            Tiến độ hôm nay
+                        </h2>
+                    </div>
+
+                    <Link
+                        href="/vocabulary"
+                        className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2"
+                    >
+                        Thêm từ vựng
+                    </Link>
+                </div>
 
                 <div className="mt-3">
                     <div className="mb-2 flex items-center justify-between">
@@ -41,7 +53,7 @@ export function DailyProgress({ progress }: DailyProgressProps) {
             </div>
 
             {words.length > 0 ? (
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3">
+                <div className="grid grid-cols-2 gap-3">
                     {words.map((item) => (
                         <div
                             key={item.id}

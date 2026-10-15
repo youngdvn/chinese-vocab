@@ -54,12 +54,9 @@ export function Overview({ overview }: OverviewProps) {
                 <h2 className="text-lg font-semibold tracking-tight text-primary">
                     Tổng quan
                 </h2>
-                <Badge variant="outline" className="text-xs">
-                    Thời gian thực
-                </Badge>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3">
                 {items.map((item) => {
                     const Icon = item.icon
                     return (

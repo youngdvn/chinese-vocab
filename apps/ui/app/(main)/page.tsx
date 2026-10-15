@@ -49,8 +49,8 @@ export default function HomePage() {
 
     return (
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-4 md:p-6">
-            <HeroSection progress={progress} />
-            <Overview overview={overview} />
+            {/* <HeroSection progress={progress} />
+            <Overview overview={overview} /> */}
             <DailyProgress progress={progress} />
             <ContinueLearning waitingCount={overview?.waiting_review_count ?? 0} />
         </div>

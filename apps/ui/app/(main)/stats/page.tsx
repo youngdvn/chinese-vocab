@@ -7,7 +7,6 @@ import {
     IconArrowLeft,
     IconBolt,
     IconBook2,
-    IconChartBar,
     IconFlame,
     IconSparkles,
     IconTarget,
@@ -81,15 +80,11 @@ export default function StatsPage() {
                 </Link>
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold tracking-tight">Thống kê học tập</h1>
+                        <h1 className="text-xl font-bold tracking-tight">Thống kê học tập</h1>
                         <p className="text-xs text-muted-foreground">
                             Theo dõi chi tiết tiến trình ghi nhớ từ vựng tiếng Trung
                         </p>
                     </div>
-                    <Badge variant="outline" className="gap-1 border-primary/30 text-primary">
-                        <IconChartBar size={14} />
-                        Báo cáo
-                    </Badge>
                 </div>
             </div>
 
