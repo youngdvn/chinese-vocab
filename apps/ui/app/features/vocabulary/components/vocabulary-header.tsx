@@ -13,6 +13,7 @@ import {
 } from "@workspace/ui/components/dialog"
 import { AddVocabularyForm } from "./add-vocabulary-form"
 import { ImportVocabularyDialog } from "./import-vocabulary-dialog"
+import { StarterPacksDialog } from "./starter-packs-dialog"
 
 interface VocabularyHeaderProps {
     onAddSuccess?: () => void
@@ -39,7 +40,7 @@ export function VocabularyHeader({ onAddSuccess }: VocabularyHeaderProps) {
             </div>
 
             <div className="flex items-center gap-2">
-                {/* <ImportVocabularyDialog onSuccess={onAddSuccess} /> */}
+                <StarterPacksDialog onSuccess={onAddSuccess} />
 
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>

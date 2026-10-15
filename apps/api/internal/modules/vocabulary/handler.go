@@ -74,12 +74,21 @@ func (h *Handler) FindAll(w http.ResponseWriter, r *http.Request) {
 		limit = 10
 	}
 
+	var hskLevel *int
+	if hskStr := query.Get("hsk_level"); hskStr != "" && hskStr != "all" {
+		if val, err := strconv.Atoi(hskStr); err == nil {
+			hskLevel = &val
+		}
+	}
+
 	filter := ListVocabularyQuery{
-		Search: query.Get("search"),
-		Status: query.Get("status"),
-		Date:   query.Get("date"),
-		Page:   page,
-		Limit:  limit,
+		Search:   query.Get("search"),
+		Status:   query.Get("status"),
+		Date:     query.Get("date"),
+		HSKLevel: hskLevel,
+		Sort:     query.Get("sort"),
+		Page:     page,
+		Limit:    limit,
 	}
 
 	result, err := h.service.FindAll(r.Context(), userID, filter)

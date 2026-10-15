@@ -37,11 +37,13 @@ type UpdateVocabularyRequest struct {
 }
 
 type ListVocabularyQuery struct {
-	Search string
-	Status string
-	Date   string
-	Page   int
-	Limit  int
+	Search   string
+	Status   string
+	Date     string
+	HSKLevel *int
+	Sort     string
+	Page     int
+	Limit    int
 }
 
 type PaginationMeta struct {

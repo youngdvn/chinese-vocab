@@ -9,6 +9,7 @@ export interface Vocabulary {
     example?: string
     note?: string
     status: VocabularyStatus
+    hsk_level?: number
     created_at?: string
     createdAt?: string
 }
@@ -31,6 +32,7 @@ export interface CreateVocabularyPayload {
     meaning: string
     example?: string
     note?: string
+    hsk_level?: number
 }
 
 export interface UpdateVocabularyPayload {
@@ -40,4 +42,5 @@ export interface UpdateVocabularyPayload {
     example?: string
     note?: string
     status?: VocabularyStatus
+    hsk_level?: number
 }

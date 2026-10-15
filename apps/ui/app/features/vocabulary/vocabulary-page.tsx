@@ -21,6 +21,8 @@ export function VocabularyPage() {
     const [search, setSearch] = useState("")
     const [status, setStatus] = useState("all")
     const [date, setDate] = useState("all")
+    const [hsk, setHsk] = useState("all")
+    const [sort, setSort] = useState("latest")
     const [currentPage, setCurrentPage] = useState(1)
 
     const fetchWords = useCallback(async () => {
@@ -30,6 +32,8 @@ export function VocabularyPage() {
                 search: search.trim() || undefined,
                 status: status !== "all" ? status : undefined,
                 date: date !== "all" ? date : undefined,
+                hsk_level: hsk !== "all" ? hsk : undefined,
+                sort: sort !== "latest" ? sort : undefined,
                 page: currentPage,
                 limit: ITEMS_PER_PAGE,
             })
@@ -38,12 +42,15 @@ export function VocabularyPage() {
             setTotal(res.pagination.total_items)
             setTotalPages(res.pagination.total_pages || 1)
         } catch (error) {
-            const message = error instanceof Error ? error.message : "Không thể tải danh sách từ vựng"
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "Không thể tải danh sách từ vựng"
             toast.error(message)
         } finally {
             setIsLoading(false)
         }
-    }, [search, status, date, currentPage])
+    }, [search, status, date, hsk, sort, currentPage])
 
     useEffect(() => {
         fetchWords()
@@ -55,7 +62,8 @@ export function VocabularyPage() {
             toast.success("Đã xóa từ vựng thành công!")
             fetchWords()
         } catch (error) {
-            const message = error instanceof Error ? error.message : "Không thể xóa từ vựng"
+            const message =
+                error instanceof Error ? error.message : "Không thể xóa từ vựng"
             toast.error(message)
         }
     }
@@ -64,6 +72,8 @@ export function VocabularyPage() {
         setSearch("")
         setStatus("all")
         setDate("all")
+        setHsk("all")
+        setSort("latest")
         setCurrentPage(1)
     }
 
@@ -75,6 +85,8 @@ export function VocabularyPage() {
                 search={search}
                 status={status}
                 date={date}
+                hsk={hsk}
+                sort={sort}
                 onSearchChange={(value) => {
                     setSearch(value)
                     setCurrentPage(1)
@@ -85,6 +97,14 @@ export function VocabularyPage() {
                 }}
                 onDateChange={(value) => {
                     setDate(value)
+                    setCurrentPage(1)
+                }}
+                onHskChange={(value) => {
+                    setHsk(value)
+                    setCurrentPage(1)
+                }}
+                onSortChange={(value) => {
+                    setSort(value)
                     setCurrentPage(1)
                 }}
                 onClear={clearFilters}

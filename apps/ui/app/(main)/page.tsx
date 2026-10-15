@@ -6,6 +6,7 @@ import {
     Overview,
     DailyProgress,
     ContinueLearning,
+    StarterPacksSection,
 } from "@/app/features/home"
 import { getDailyProgress, getDashboardOverview } from "@/services/dashboard.service"
 import type { DailyProgress as DailyProgressType, DashboardOverview } from "@/types/dashboard.types"
@@ -110,6 +111,7 @@ export default function HomePage() {
             {/* <HeroSection progress={progress} />
             <Overview overview={overview} /> */}
             <DailyProgress progress={progress} />
+            <StarterPacksSection />
             <ContinueLearning waitingCount={overview?.waiting_review_count ?? 0} />
         </div>
     )

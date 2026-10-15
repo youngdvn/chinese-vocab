@@ -128,9 +128,28 @@ func (r *Repository) FindAll(
 	}
 
 	if filter.Date != "" && filter.Date != "all" {
-		whereClauses = append(whereClauses, fmt.Sprintf("created_at::date = $%d::date", argIdx))
-		args = append(args, strings.TrimSpace(filter.Date))
-		argIdx++
+		switch strings.ToLower(strings.TrimSpace(filter.Date)) {
+		case "today":
+			whereClauses = append(whereClauses, "created_at >= CURRENT_DATE")
+		case "7days":
+			whereClauses = append(whereClauses, "created_at >= CURRENT_DATE - INTERVAL '7 days'")
+		case "30days":
+			whereClauses = append(whereClauses, "created_at >= CURRENT_DATE - INTERVAL '30 days'")
+		default:
+			whereClauses = append(whereClauses, fmt.Sprintf("created_at::date = $%d::date", argIdx))
+			args = append(args, strings.TrimSpace(filter.Date))
+			argIdx++
+		}
+	}
+
+	if filter.HSKLevel != nil {
+		if *filter.HSKLevel == 0 {
+			whereClauses = append(whereClauses, "hsk_level IS NULL")
+		} else {
+			whereClauses = append(whereClauses, fmt.Sprintf("hsk_level = $%d", argIdx))
+			args = append(args, *filter.HSKLevel)
+			argIdx++
+		}
 	}
 
 	whereSQL := strings.Join(whereClauses, " AND ")
@@ -146,6 +165,23 @@ func (r *Repository) FindAll(
 	totalPages := 0
 	if totalItems > 0 {
 		totalPages = int(math.Ceil(float64(totalItems) / float64(limit)))
+	}
+
+	// Determine sorting
+	orderBy := "created_at DESC"
+	switch strings.ToLower(strings.TrimSpace(filter.Sort)) {
+	case "oldest":
+		orderBy = "created_at ASC"
+	case "pinyin_asc":
+		orderBy = "pinyin ASC, created_at DESC"
+	case "pinyin_desc":
+		orderBy = "pinyin DESC, created_at DESC"
+	case "hsk_asc":
+		orderBy = "hsk_level ASC NULLS LAST, created_at DESC"
+	case "hsk_desc":
+		orderBy = "hsk_level DESC NULLS LAST, created_at DESC"
+	default:
+		orderBy = "created_at DESC"
 	}
 
 	// 2. Select paginated items
@@ -164,9 +200,9 @@ func (r *Repository) FindAll(
 			updated_at
 		FROM vocabularies
 		WHERE %s
-		ORDER BY created_at DESC
+		ORDER BY %s
 		LIMIT $%d OFFSET $%d
-	`, whereSQL, argIdx, argIdx+1)
+	`, whereSQL, orderBy, argIdx, argIdx+1)
 
 	args = append(args, limit, offset)
 

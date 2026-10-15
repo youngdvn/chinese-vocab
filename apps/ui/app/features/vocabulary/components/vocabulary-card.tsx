@@ -57,10 +57,15 @@ export function VocabularyCard({ word, onDelete, onUpdate }: VocabularyCardProps
                 className="group flex items-center justify-between gap-4 rounded-xl border bg-card p-4 transition-all duration-150 hover:bg-muted/40 hover:border-primary/40 hover:shadow-xs active:scale-[0.99] cursor-pointer"
             >
                 {/* Chỉ hiển thị phần Hán ngữ trên card */}
-                <div className="flex items-center gap-3 min-w-0">
+                <div className="flex items-center gap-2.5 min-w-0">
                     <span className="text-2xl font-bold tracking-wide text-primary transition-transform group-hover:scale-105 origin-left">
                         {chineseText}
                     </span>
+                    {word.hsk_level ? (
+                        <span className="rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
+                            HSK {word.hsk_level}
+                        </span>
+                    ) : null}
                 </div>
 
                 {/* Các action */}

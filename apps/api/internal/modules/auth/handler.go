@@ -57,10 +57,13 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var token string
 	if h.tokenService != nil {
-		token, expiresAt, err := h.tokenService.Generate(user.ID)
+		generatedToken, expiresAt, err := h.tokenService.Generate(user.ID)
 		if err == nil {
-			secure := os.Getenv("APP_ENV") == "production"
+			token = generatedToken
+			isHTTPS := r.TLS != nil || r.Header.Get("X-Forwarded-Proto") == "https"
+			secure := os.Getenv("APP_ENV") == "production" || isHTTPS
 			sameSite := http.SameSiteLaxMode
 			if secure {
 				sameSite = http.SameSiteNoneMode
@@ -79,7 +82,13 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	writeJSON(w, http.StatusCreated, user)
+	writeJSON(w, http.StatusCreated, map[string]any{
+		"id":           user.ID,
+		"email":        user.Email,
+		"name":         user.Name,
+		"access_token": token,
+		"token":        token,
+	})
 }
 
 func writeJSON(w http.ResponseWriter, status int, data any) {
@@ -140,7 +149,8 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	secure := os.Getenv("APP_ENV") == "production"
+	isHTTPS := r.TLS != nil || r.Header.Get("X-Forwarded-Proto") == "https"
+	secure := os.Getenv("APP_ENV") == "production" || isHTTPS
 
 	sameSite := http.SameSiteLaxMode
 	if secure {
@@ -158,7 +168,13 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		MaxAge:   int(time.Until(expiresAt).Seconds()),
 	})
 
-	writeJSON(w, http.StatusOK, user)
+	writeJSON(w, http.StatusOK, map[string]any{
+		"id":           user.ID,
+		"email":        user.Email,
+		"name":         user.Name,
+		"access_token": token,
+		"token":        token,
+	})
 }
 
 func (h *Handler) Logout(w http.ResponseWriter, r *http.Request) {
@@ -169,7 +185,8 @@ func (h *Handler) Logout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	secure := os.Getenv("APP_ENV") == "production"
+	isHTTPS := r.TLS != nil || r.Header.Get("X-Forwarded-Proto") == "https"
+	secure := os.Getenv("APP_ENV") == "production" || isHTTPS
 	sameSite := http.SameSiteLaxMode
 	if secure {
 		sameSite = http.SameSiteNoneMode
