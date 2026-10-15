@@ -1,7 +1,6 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
     IconBolt,
     IconPuzzle,
@@ -9,9 +8,11 @@ import {
     IconKeyboard,
     IconHeadphones,
 } from "@tabler/icons-react"
+import { Tabs, TabsList, TabsTrigger } from "@workspace/ui/components/tabs"
 
 export function PracticeNav() {
     const pathname = usePathname()
+    const router = useRouter()
 
     const modes = [
         {
@@ -46,31 +47,34 @@ export function PracticeNav() {
         },
     ]
 
-    return (
-        <div className="w-full overflow-x-auto pb-2 scrollbar-none">
-            <div className="flex items-center gap-1.5 rounded-xl bg-muted/60 p-1 w-max mx-auto border">
-                {modes.map((mode) => {
-                    const Icon = mode.icon
-                    const isActive = mode.exact
-                        ? pathname === mode.href
-                        : pathname.startsWith(mode.href)
+    const activeTab =
+        modes.find((mode) =>
+            mode.exact ? pathname === mode.href : pathname.startsWith(mode.href)
+        )?.href ?? "/practice"
 
-                    return (
-                        <Link
-                            key={mode.href}
-                            href={mode.href}
-                            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
-                                isActive
-                                    ? "bg-background text-foreground shadow-xs"
-                                    : "text-muted-foreground hover:text-foreground hover:bg-background/50"
-                            }`}
-                        >
-                            <Icon size={14} className={isActive ? "text-primary" : ""} />
-                            <span>{mode.label}</span>
-                        </Link>
-                    )
-                })}
-            </div>
+    return (
+        <div className="w-full overflow-x-auto pb-2 scrollbar-none flex justify-center">
+            <Tabs
+                value={activeTab}
+                onValueChange={(val) => router.push(val)}
+                className="w-auto"
+            >
+                <TabsList className="h-10 p-1 bg-muted/70 border border-border/80 shadow-xs gap-1 rounded-xl">
+                    {modes.map((mode) => {
+                        const Icon = mode.icon
+                        return (
+                            <TabsTrigger
+                                key={mode.href}
+                                value={mode.href}
+                                className="gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:font-semibold data-[state=active]:shadow-xs"
+                            >
+                                <Icon size={14} />
+                                <span>{mode.label}</span>
+                            </TabsTrigger>
+                        )
+                    })}
+                </TabsList>
+            </Tabs>
         </div>
     )
 }

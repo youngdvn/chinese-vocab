@@ -1,10 +1,12 @@
 "use client"
 
-import { Progress } from "@workspace/ui/components/progress"
-import { Badge } from "@workspace/ui/components/badge"
-import { WordAudio } from "@/components/word-audio"
-import type { DailyProgress as DailyProgressType } from "@/types/dashboard.types"
 import Link from "next/link"
+import { IconPlus } from "@tabler/icons-react"
+import { Progress } from "@workspace/ui/components/progress"
+import { Button } from "@workspace/ui/components/button"
+import { EmptyState } from "@/components/empty-state"
+import { DailyWordCard } from "./daily-word-card"
+import type { DailyProgress as DailyProgressType } from "@/types/dashboard.types"
 
 interface DailyProgressProps {
     progress?: DailyProgressType | null
@@ -30,7 +32,7 @@ export function DailyProgress({ progress }: DailyProgressProps) {
                         href="/vocabulary"
                         className="text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2"
                     >
-                        Thêm từ vựng
+                        Quản lý từ vựng
                     </Link>
                 </div>
 
@@ -53,41 +55,43 @@ export function DailyProgress({ progress }: DailyProgressProps) {
             </div>
 
             {words.length > 0 ? (
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                     {words.map((item) => (
-                        <div
-                            key={item.id}
-                            className="relative flex flex-col items-center gap-2 rounded-xl border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md text-center"
-                        >
-                            <div className="absolute top-2 right-2">
-                                <WordAudio word={item.hanzi} />
-                            </div>
-
-                            <p className="text-2xl font-bold mt-2">
-                                {item.hanzi}
-                            </p>
-
-                            <p className="text-sm text-muted-foreground">
-                                {item.pinyin}
-                            </p>
-
-                            <p className="text-sm font-medium line-clamp-1">
-                                {item.meaning}
-                            </p>
-
-                            <Badge
-                                variant={item.learned_today ? "default" : "secondary"}
-                                className="mt-1 text-[10px]"
-                            >
-                                {item.learned_today ? "Đã ôn hôm nay" : item.status === "new" ? "Từ mới" : "Cần ôn"}
-                            </Badge>
-                        </div>
+                        <DailyWordCard key={item.id} word={item} />
                     ))}
+
+                    {/* Card trống tạo nút + thêm từ vựng */}
+                    <Link
+                        href="/vocabulary"
+                        className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-primary/30 bg-primary/5 p-4 text-center transition-all duration-150 hover:border-primary hover:bg-primary/10 hover:-translate-y-0.5 hover:shadow-xs min-h-[140px]"
+                    >
+                        <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary transition-transform group-hover:scale-110 shadow-2xs">
+                            <IconPlus size={22} />
+                        </div>
+                        <div className="space-y-0.5">
+                            <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                                Thêm từ vựng
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                                Bổ sung vào kho từ
+                            </p>
+                        </div>
+                    </Link>
                 </div>
             ) : (
-                <div className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground">
-                    Chưa có từ vựng nào trong danh sách hôm nay. Hãy thêm từ vựng mới để bắt đầu học!
-                </div>
+                <EmptyState
+                    icon={<IconPlus size={24} />}
+                    title="Chưa có từ vựng nào trong danh sách hôm nay"
+                    description="Hãy thêm từ vựng mới vào kho từ để bắt đầu học và tích luỹ tiến độ mỗi ngày!"
+                    action={
+                        <Link href="/vocabulary">
+                            <Button className="gap-1.5 h-9">
+                                <IconPlus size={16} />
+                                Thêm từ vựng ngay
+                            </Button>
+                        </Link>
+                    }
+                />
             )}
         </section>
     )

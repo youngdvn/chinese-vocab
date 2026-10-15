@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@workspace/ui/componen
 import { Badge } from "@workspace/ui/components/badge"
 import { Progress } from "@workspace/ui/components/progress"
 import { Button } from "@workspace/ui/components/button"
+import { Skeleton } from "@workspace/ui/components/skeleton"
 import { getDashboardOverview, getDailyProgress } from "@/services/dashboard.service"
 import { getVocabularies } from "@/services/vocabulary.service"
 import type { DashboardOverview, DailyProgress as DailyProgressType } from "@/types/dashboard.types"
@@ -50,9 +51,69 @@ export default function StatsPage() {
 
     if (isLoading) {
         return (
-            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-2xl flex-col items-center justify-center gap-4 px-4 text-center">
-                <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                <p className="text-sm text-muted-foreground">Đang tổng hợp dữ liệu học tập...</p>
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-2xl flex-col gap-5 px-4 py-6">
+                {/* Header Skeleton */}
+                <div>
+                    <Skeleton className="h-3.5 w-20 mb-2 rounded-md" />
+                    <div className="space-y-1.5">
+                        <Skeleton className="h-6 w-44 rounded-md" />
+                        <Skeleton className="h-3.5 w-64 rounded-md" />
+                    </div>
+                </div>
+
+                {/* Daily Goal Card Skeleton */}
+                <Card className="border-l-4 border-l-primary/40">
+                    <CardHeader className="pb-2">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <Skeleton className="size-8 rounded-lg" />
+                                <div className="space-y-1.5">
+                                    <Skeleton className="h-4 w-32 rounded-md" />
+                                    <Skeleton className="h-3 w-40 rounded-md" />
+                                </div>
+                            </div>
+                            <Skeleton className="h-6 w-12 rounded-md" />
+                        </div>
+                    </CardHeader>
+                    <CardContent className="pt-2 space-y-2">
+                        <Skeleton className="h-2.5 w-full rounded-full" />
+                        <Skeleton className="h-3 w-48 rounded-md" />
+                    </CardContent>
+                </Card>
+
+                {/* Status Breakdown Skeleton */}
+                <Card>
+                    <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between">
+                            <Skeleton className="h-5 w-44 rounded-md" />
+                            <Skeleton className="h-5 w-20 rounded-full" />
+                        </div>
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-4">
+                        {Array.from({ length: 3 }).map((_, idx) => (
+                            <div key={idx} className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <Skeleton className="h-3.5 w-36 rounded-md" />
+                                    <Skeleton className="h-3.5 w-16 rounded-md" />
+                                </div>
+                                <Skeleton className="h-2 w-full rounded-full" />
+                            </div>
+                        ))}
+                    </CardContent>
+                </Card>
+
+                {/* Quick stats grid skeleton */}
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    {Array.from({ length: 4 }).map((_, idx) => (
+                        <Card key={idx} className="p-3">
+                            <div className="flex flex-col gap-2">
+                                <Skeleton className="size-8 rounded-lg" />
+                                <Skeleton className="h-6 w-16 rounded-md" />
+                                <Skeleton className="h-3 w-20 rounded-md" />
+                            </div>
+                        </Card>
+                    ))}
+                </div>
             </main>
         )
     }

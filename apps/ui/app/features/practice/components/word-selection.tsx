@@ -6,13 +6,10 @@ import { toast } from "sonner"
 import {
     IconArrowLeft,
     IconArrowRight,
-    IconCheck,
     IconSearch,
 } from "@tabler/icons-react"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
-import { Badge } from "@workspace/ui/components/badge"
-import { Card } from "@workspace/ui/components/card"
 import {
     Select,
     SelectContent,
@@ -22,7 +19,10 @@ import {
 } from "@workspace/ui/components/select"
 import { getVocabularies } from "@/services/vocabulary.service"
 import type { Vocabulary } from "@/types/vocabulary"
+import { Skeleton } from "@workspace/ui/components/skeleton"
+import { EmptyState } from "@/components/empty-state"
 import { PracticeNav } from "../practice-nav"
+import { SelectableWordCard } from "./selectable-word-card"
 
 export interface WordSelectionProps {
     onStart: (words: Vocabulary[]) => void
@@ -93,9 +93,50 @@ export function WordSelection({ onStart }: WordSelectionProps) {
 
     if (isLoading) {
         return (
-            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col items-center justify-center gap-4 px-4">
-                <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                <p className="text-sm text-muted-foreground">Đang tải danh sách từ vựng...</p>
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-0 px-4 pb-28 pt-4">
+                <PracticeNav />
+
+                {/* Header Skeleton */}
+                <div className="mb-4 mt-2">
+                    <Skeleton className="h-3.5 w-20 mb-2 rounded-md" />
+                    <div className="space-y-1.5">
+                        <Skeleton className="h-6 w-44 rounded-md" />
+                        <Skeleton className="h-3.5 w-36 rounded-md" />
+                    </div>
+                </div>
+
+                {/* Search & Filter Skeleton */}
+                <div className="flex gap-2 mb-3">
+                    <Skeleton className="h-9 flex-1 rounded-lg" />
+                    <Skeleton className="h-9 w-32 rounded-lg" />
+                </div>
+
+                {/* Counter & Action Skeleton */}
+                <div className="flex items-center justify-between mb-2 px-1">
+                    <Skeleton className="h-4 w-24 rounded-md" />
+                    <div className="flex gap-2">
+                        <Skeleton className="h-6 w-16 rounded-md" />
+                        <Skeleton className="h-6 w-14 rounded-md" />
+                    </div>
+                </div>
+
+                {/* Word List Skeleton */}
+                <div className="flex flex-col gap-2">
+                    {Array.from({ length: 6 }).map((_, idx) => (
+                        <div
+                            key={idx}
+                            className="flex items-center gap-3 rounded-xl border bg-card p-3 shadow-xs"
+                        >
+                            <Skeleton className="size-4 shrink-0 rounded-sm" />
+                            <Skeleton className="h-10 w-12 shrink-0 rounded-lg" />
+                            <div className="flex-1 space-y-1.5">
+                                <Skeleton className="h-3.5 w-20 rounded-md" />
+                                <Skeleton className="h-3 w-36 rounded-md" />
+                            </div>
+                            <Skeleton className="h-5 w-16 rounded-full" />
+                        </div>
+                    ))}
+                </div>
             </main>
         )
     }
@@ -162,56 +203,34 @@ export function WordSelection({ onStart }: WordSelectionProps) {
 
             {/* Word list */}
             {filtered.length === 0 ? (
-                <Card className="flex flex-col items-center justify-center py-16 gap-2 text-muted-foreground border-dashed">
-                    <IconSearch size={32} className="opacity-30" />
-                    <p className="text-sm">Không tìm thấy từ nào phù hợp</p>
-                </Card>
+                <EmptyState
+                    icon={<IconSearch size={24} />}
+                    title="Không tìm thấy từ nào phù hợp"
+                    description={
+                        allWords.length === 0
+                            ? "Kho từ vựng của bạn chưa có từ nào. Hãy thêm từ vựng mới để bắt đầu học nhé!"
+                            : "Không có từ vựng nào khớp với bộ lọc tìm kiếm hiện tại."
+                    }
+                    action={
+                        allWords.length === 0 ? (
+                            <Link href="/vocabulary">
+                                <Button className="gap-1.5 h-9">
+                                    Thêm từ vựng ngay
+                                </Button>
+                            </Link>
+                        ) : undefined
+                    }
+                />
             ) : (
                 <div className="flex flex-col gap-2">
-                    {filtered.map((word) => {
-                        const hanzi = word.hanzi || word.chinese || ""
-                        const isSelected = selected.has(word.id)
-                        return (
-                            <div
-                                key={word.id}
-                                onClick={() => toggle(word.id)}
-                                className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition-all duration-150 active:scale-[0.99] ${isSelected
-                                    ? "border-primary/60 bg-primary/5 ring-1 ring-primary/20"
-                                    : "border-border bg-card hover:border-primary/30 hover:bg-muted/30"
-                                    }`}
-                            >
-                                <div
-                                    className={`flex size-5 shrink-0 items-center justify-center rounded-md border-2 transition-all ${isSelected
-                                        ? "border-primary bg-primary text-primary-foreground"
-                                        : "border-muted-foreground/30"
-                                        }`}
-                                >
-                                    {isSelected && <IconCheck size={12} strokeWidth={3} />}
-                                </div>
-
-                                <div className="flex flex-1 items-center gap-3 min-w-0">
-                                    <span className="text-2xl font-bold shrink-0">{hanzi}</span>
-                                    <div className="min-w-0">
-                                        <p className="text-xs text-muted-foreground">{word.pinyin}</p>
-                                        <p className="text-sm font-medium truncate">{word.meaning}</p>
-                                    </div>
-                                </div>
-
-                                <Badge
-                                    variant={
-                                        word.status === "new"
-                                            ? "default"
-                                            : word.status === "mastered"
-                                                ? "outline"
-                                                : "secondary"
-                                    }
-                                    className="text-[10px] h-5"
-                                >
-                                    {word.status === "new" ? "Mới" : word.status === "mastered" ? "Thành thạo" : "Đang học"}
-                                </Badge>
-                            </div>
-                        )
-                    })}
+                    {filtered.map((word) => (
+                        <SelectableWordCard
+                            key={word.id}
+                            word={word}
+                            isSelected={selected.has(word.id)}
+                            onToggle={toggle}
+                        />
+                    ))}
                 </div>
             )}
 

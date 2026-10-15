@@ -5,6 +5,8 @@ import Link from "next/link"
 import { toast } from "sonner"
 import {
     IconArrowLeft,
+    IconPlus,
+    IconPuzzle,
     IconRefresh,
     IconSparkles,
     IconTrophy,
@@ -13,6 +15,8 @@ import { Button } from "@workspace/ui/components/button"
 import { Badge } from "@workspace/ui/components/badge"
 import { Progress } from "@workspace/ui/components/progress"
 import { Card, CardContent } from "@workspace/ui/components/card"
+import { Skeleton } from "@workspace/ui/components/skeleton"
+import { EmptyState } from "@/components/empty-state"
 import { getVocabularies } from "@/services/vocabulary.service"
 import type { Vocabulary } from "@/types/vocabulary"
 import type { MatchItem } from "@/types/practice.types"
@@ -169,9 +173,50 @@ export default function MatchingPage() {
 
     if (isLoading) {
         return (
-            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col items-center justify-center gap-4 px-4 text-center">
-                <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                <p className="text-sm text-muted-foreground">Đang chuẩn bị trò chơi nối từ...</p>
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
+                <PracticeNav />
+
+                {/* Header Skeleton */}
+                <div className="flex items-center justify-between">
+                    <Skeleton className="h-3.5 w-20 rounded-md" />
+                    <div className="flex flex-col items-center gap-1">
+                        <Skeleton className="h-4 w-28 rounded-md" />
+                        <Skeleton className="h-3 w-14 rounded-md" />
+                    </div>
+                    <Skeleton className="h-5 w-14 rounded-full" />
+                </div>
+
+                {/* Progress */}
+                <Skeleton className="h-1.5 w-full rounded-full" />
+
+                {/* Instruction */}
+                <div className="flex justify-center">
+                    <Skeleton className="h-3.5 w-72 rounded-md" />
+                </div>
+
+                {/* Game Board Skeleton: 2 columns of 5 cards */}
+                <div className="grid grid-cols-2 gap-3">
+                    <div className="flex flex-col gap-2">
+                        {Array.from({ length: 5 }).map((_, idx) => (
+                            <div
+                                key={idx}
+                                className="flex h-14 items-center justify-center rounded-xl border bg-card p-3 shadow-xs"
+                            >
+                                <Skeleton className="h-6 w-16 rounded-md" />
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        {Array.from({ length: 5 }).map((_, idx) => (
+                            <div
+                                key={idx}
+                                className="flex h-14 items-center justify-center rounded-xl border bg-card p-3 shadow-xs"
+                            >
+                                <Skeleton className="h-4 w-24 rounded-md" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </main>
         )
     }
@@ -232,6 +277,27 @@ export default function MatchingPage() {
                         </Button>
                     </Link>
                 </div>
+            </main>
+        )
+    }
+
+    if (leftItems.length === 0) {
+        return (
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
+                <PracticeNav />
+                <EmptyState
+                    icon={<IconPuzzle size={28} />}
+                    title="Chưa có từ vựng để tạo trò chơi nối từ"
+                    description="Hãy thêm ít nhất 2 từ vựng vào kho từ để bắt đầu trò chơi ghép chữ Hán và ý nghĩa."
+                    action={
+                        <Link href="/vocabulary">
+                            <Button className="gap-1.5 h-9">
+                                <IconPlus size={16} />
+                                Thêm từ vựng ngay
+                            </Button>
+                        </Link>
+                    }
+                />
             </main>
         )
     }

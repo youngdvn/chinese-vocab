@@ -8,6 +8,7 @@ import {
     IconCheck,
     IconFlame,
     IconHelpCircle,
+    IconPlus,
     IconRefresh,
     IconTrophy,
     IconX,
@@ -16,6 +17,8 @@ import { Button } from "@workspace/ui/components/button"
 import { Badge } from "@workspace/ui/components/badge"
 import { Card, CardContent } from "@workspace/ui/components/card"
 import { Progress } from "@workspace/ui/components/progress"
+import { Skeleton } from "@workspace/ui/components/skeleton"
+import { EmptyState } from "@/components/empty-state"
 import { WordAudio } from "@/components/word-audio"
 import { getVocabularies } from "@/services/vocabulary.service"
 import { submitReview } from "@/services/review.service"
@@ -140,9 +143,38 @@ export default function QuizPage() {
 
     if (isLoading) {
         return (
-            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col items-center justify-center gap-4 px-4 text-center">
-                <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                <p className="text-sm text-muted-foreground">Đang chuẩn bị câu hỏi trắc nghiệm...</p>
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
+                <PracticeNav />
+
+                {/* Header Skeleton */}
+                <div className="flex items-center justify-between">
+                    <Skeleton className="h-3.5 w-20 rounded-md" />
+                    <Skeleton className="h-4 w-24 rounded-md" />
+                </div>
+
+                {/* Progress */}
+                <Skeleton className="h-1.5 w-full rounded-full" />
+
+                {/* Question Card Skeleton */}
+                <Card className="relative overflow-hidden border-2 text-center py-10 px-4 flex flex-col items-center justify-center gap-3">
+                    <Skeleton className="size-9 rounded-lg absolute top-3 right-3" />
+                    <Skeleton className="h-5 w-40 rounded-full" />
+                    <Skeleton className="h-14 w-32 rounded-xl mt-1" />
+                    <Skeleton className="h-4 w-20 rounded-md" />
+                </Card>
+
+                {/* 4 Options Grid Skeleton */}
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {Array.from({ length: 4 }).map((_, idx) => (
+                        <div
+                            key={idx}
+                            className="flex h-16 items-center gap-3 rounded-xl border bg-card p-3 shadow-xs"
+                        >
+                            <Skeleton className="size-7 shrink-0 rounded-lg" />
+                            <Skeleton className="h-4 flex-1 rounded-md" />
+                        </div>
+                    ))}
+                </div>
             </main>
         )
     }
@@ -202,6 +234,27 @@ export default function QuizPage() {
                         </Button>
                     </Link>
                 </div>
+            </main>
+        )
+    }
+
+    if (questions.length === 0) {
+        return (
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
+                <PracticeNav />
+                <EmptyState
+                    icon={<IconHelpCircle size={28} />}
+                    title="Chưa có từ vựng để tạo bài Quiz"
+                    description="Hãy thêm ít nhất 4 từ vựng vào kho từ để hệ thống có thể tạo các câu hỏi trắc nghiệm ôn tập cho bạn."
+                    action={
+                        <Link href="/vocabulary">
+                            <Button className="gap-1.5 h-9">
+                                <IconPlus size={16} />
+                                Thêm từ vựng ngay
+                            </Button>
+                        </Link>
+                    }
+                />
             </main>
         )
     }

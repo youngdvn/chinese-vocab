@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import {
     IconArrowLeft,
     IconHeadphones,
+    IconPlus,
     IconRefresh,
     IconTrophy,
     IconVolume,
@@ -14,6 +15,8 @@ import { Button } from "@workspace/ui/components/button"
 import { Badge } from "@workspace/ui/components/badge"
 import { Card, CardContent } from "@workspace/ui/components/card"
 import { Progress } from "@workspace/ui/components/progress"
+import { Skeleton } from "@workspace/ui/components/skeleton"
+import { EmptyState } from "@/components/empty-state"
 import { getVocabularies } from "@/services/vocabulary.service"
 import { submitReview } from "@/services/review.service"
 import type { Vocabulary } from "@/types/vocabulary"
@@ -139,9 +142,51 @@ export default function ListeningPracticePage() {
 
     if (isLoading) {
         return (
-            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col items-center justify-center gap-4 px-4 text-center">
-                <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-                <p className="text-sm text-muted-foreground">Đang tải bài luyện nghe...</p>
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
+                <PracticeNav />
+
+                {/* Header Skeleton */}
+                <div className="flex items-center justify-between">
+                    <Skeleton className="h-3.5 w-20 rounded-md" />
+                    <div className="flex flex-col items-center gap-1">
+                        <Skeleton className="h-4 w-24 rounded-md" />
+                        <Skeleton className="h-3 w-16 rounded-md" />
+                    </div>
+                    <Skeleton className="h-5 w-16 rounded-full" />
+                </div>
+
+                {/* Progress */}
+                <Skeleton className="h-1.5 w-full rounded-full" />
+
+                {/* Audio Box Skeleton */}
+                <Card className="text-center py-10 px-4 flex flex-col items-center justify-center gap-4">
+                    <Skeleton className="size-24 rounded-full shadow-md" />
+                    <div className="flex gap-2">
+                        <Skeleton className="h-8 w-32 rounded-lg" />
+                        <Skeleton className="h-8 w-28 rounded-lg" />
+                    </div>
+                </Card>
+
+                {/* Prompt badge skeleton */}
+                <div className="flex justify-center">
+                    <Skeleton className="h-5 w-40 rounded-full" />
+                </div>
+
+                {/* Options Grid Skeleton */}
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {Array.from({ length: 4 }).map((_, idx) => (
+                        <div
+                            key={idx}
+                            className="flex h-16 items-center gap-3 rounded-xl border bg-card p-3 shadow-xs"
+                        >
+                            <Skeleton className="size-7 shrink-0 rounded-lg" />
+                            <div className="flex-1 space-y-1.5">
+                                <Skeleton className="h-4 w-20 rounded-md" />
+                                <Skeleton className="h-3 w-28 rounded-md" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </main>
         )
     }
@@ -185,6 +230,27 @@ export default function ListeningPracticePage() {
                         </Button>
                     </Link>
                 </div>
+            </main>
+        )
+    }
+
+    if (questions.length === 0) {
+        return (
+            <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
+                <PracticeNav />
+                <EmptyState
+                    icon={<IconHeadphones size={28} />}
+                    title="Chưa có từ vựng để tạo bài luyện nghe"
+                    description="Hãy thêm ít nhất 4 từ vựng vào kho từ để hệ thống có thể phát âm và tạo câu hỏi luyện nghe cho bạn."
+                    action={
+                        <Link href="/vocabulary">
+                            <Button className="gap-1.5 h-9">
+                                <IconPlus size={16} />
+                                Thêm từ vựng ngay
+                            </Button>
+                        </Link>
+                    }
+                />
             </main>
         )
     }
