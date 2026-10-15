@@ -286,7 +286,7 @@ export default function MatchingPage() {
             <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
                 <PracticeNav />
                 <EmptyState
-                    icon={<IconPuzzle size={28} />}
+                    // icon={<IconPuzzle size={28} />}
                     title="Chưa có từ vựng để tạo trò chơi nối từ"
                     description="Hãy thêm ít nhất 2 từ vựng vào kho từ để bắt đầu trò chơi ghép chữ Hán và ý nghĩa."
                     action={
