@@ -2,6 +2,7 @@ import { Button } from "@workspace/ui/components/button"
 import { Progress } from "@workspace/ui/components/progress"
 import Link from "next/link"
 import type { DailyProgress } from "@/types/dashboard.types"
+import { IconBrain } from "@tabler/icons-react"
 
 interface HeroSectionProps {
     progress?: DailyProgress | null
@@ -20,9 +21,6 @@ export function HeroSection({ progress }: HeroSectionProps) {
             <div className="relative flex flex-col gap-5">
                 <div className="flex items-start justify-between">
                     <div>
-                        <p className="text-sm text-muted-foreground">
-                            今日学习 • Học hôm nay
-                        </p>
 
                         <h1 className="mt-1 text-2xl font-bold tracking-tight">
                             Mục tiêu hôm nay
@@ -34,7 +32,7 @@ export function HeroSection({ progress }: HeroSectionProps) {
                     </div>
 
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-lg font-bold text-primary">
-                        学
+                        <IconBrain />
                     </div>
                 </div>
 
@@ -45,7 +43,7 @@ export function HeroSection({ progress }: HeroSectionProps) {
                                 Tiến độ hàng ngày
                             </p>
 
-                            <p className="mt-1 text-2xl font-bold">
+                            <p className="mt-1 text-2xl font-semibold">
                                 {learnedToday}
                                 <span className="text-sm font-normal text-muted-foreground">
                                     {" "}
@@ -67,7 +65,7 @@ export function HeroSection({ progress }: HeroSectionProps) {
                     <p className="mt-2 text-xs text-muted-foreground">
                         {remainingToday > 0
                             ? `Còn ${remainingToday} từ nữa để hoàn thành mục tiêu hôm nay`
-                            : "🎉 Bạn đã xuất sắc hoàn thành mục tiêu học hôm nay!"}
+                            : "Bạn đã xuất sắc hoàn thành mục tiêu học hôm nay!"}
                     </p>
                 </div>
 

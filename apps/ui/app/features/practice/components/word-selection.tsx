@@ -118,9 +118,6 @@ export function WordSelection({ onStart }: WordSelectionProps) {
                             <span className="font-semibold text-primary">{selected.size}</span>
                         </p>
                     </div>
-                    <Badge variant="outline" className="text-xs">
-                        {selected.size}/{filtered.length} đã chọn
-                    </Badge>
                 </div>
             </div>
 
@@ -178,18 +175,16 @@ export function WordSelection({ onStart }: WordSelectionProps) {
                             <div
                                 key={word.id}
                                 onClick={() => toggle(word.id)}
-                                className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition-all duration-150 active:scale-[0.99] ${
-                                    isSelected
-                                        ? "border-primary/60 bg-primary/5 ring-1 ring-primary/20"
-                                        : "border-border bg-card hover:border-primary/30 hover:bg-muted/30"
-                                }`}
+                                className={`flex items-center gap-3 rounded-xl border p-3 cursor-pointer transition-all duration-150 active:scale-[0.99] ${isSelected
+                                    ? "border-primary/60 bg-primary/5 ring-1 ring-primary/20"
+                                    : "border-border bg-card hover:border-primary/30 hover:bg-muted/30"
+                                    }`}
                             >
                                 <div
-                                    className={`flex size-5 shrink-0 items-center justify-center rounded-md border-2 transition-all ${
-                                        isSelected
-                                            ? "border-primary bg-primary text-primary-foreground"
-                                            : "border-muted-foreground/30"
-                                    }`}
+                                    className={`flex size-5 shrink-0 items-center justify-center rounded-md border-2 transition-all ${isSelected
+                                        ? "border-primary bg-primary text-primary-foreground"
+                                        : "border-muted-foreground/30"
+                                        }`}
                                 >
                                     {isSelected && <IconCheck size={12} strokeWidth={3} />}
                                 </div>
@@ -207,8 +202,8 @@ export function WordSelection({ onStart }: WordSelectionProps) {
                                         word.status === "new"
                                             ? "default"
                                             : word.status === "mastered"
-                                            ? "outline"
-                                            : "secondary"
+                                                ? "outline"
+                                                : "secondary"
                                     }
                                     className="text-[10px] h-5"
                                 >
@@ -221,7 +216,7 @@ export function WordSelection({ onStart }: WordSelectionProps) {
             )}
 
             {/* Sticky confirm bar */}
-            <div className="fixed bottom-0 left-0 right-0 border-t bg-background/95 backdrop-blur-md px-4 py-3 flex items-center gap-3 max-w-xl mx-auto shadow-lg z-20">
+            <div className="fixed bottom-0 left-0 right-0 border-t bg-background/95 backdrop-blur-md px-4 py-3 flex items-center gap-3 max-w-md mx-auto shadow-lg z-20">
                 <div className="flex-1 text-sm">
                     {selected.size > 0 ? (
                         <span>

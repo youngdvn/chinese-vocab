@@ -14,7 +14,7 @@ import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { getMe, logout } from "@/services/auth.service"
 import type { UserResponse } from "@/types/auth.types"
-import { IconLogin, IconLogout, IconMenu2, IconUser } from "@tabler/icons-react"
+import { IconLogin, IconLogout, IconMenu2 } from "@tabler/icons-react"
 
 export default function SidebarDrawer() {
     const [open, setOpen] = useState(false)
@@ -83,7 +83,7 @@ export default function SidebarDrawer() {
                         </div>
                     ) : (
                         <div className="mt-2 flex items-center justify-between rounded-xl bg-muted/40 p-2 text-xs text-muted-foreground">
-                            <span>Chưa đăng nhập</span>
+                            <span>Bạn chưa đăng nhập</span>
                             <Link
                                 href="/login"
                                 onClick={() => setOpen(false)}

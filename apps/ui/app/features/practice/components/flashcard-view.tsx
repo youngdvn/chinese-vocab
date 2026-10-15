@@ -77,7 +77,7 @@ export function FlashcardView({ cards: initialCards, onBack }: FlashcardViewProp
                     <IconSparkles size={40} />
                 </div>
                 <div className="space-y-2">
-                    <h1 className="text-2xl font-bold">Tuyệt vời! 🎉</h1>
+                    <h1 className="text-2xl font-bold">Tuyệt vời!</h1>
                     <p className="text-sm text-muted-foreground">
                         Bạn vừa ôn xong{" "}
                         <span className="font-semibold text-foreground">{cards.length}</span> từ vựng.
@@ -103,12 +103,12 @@ export function FlashcardView({ cards: initialCards, onBack }: FlashcardViewProp
                     </Button>
                     <Link href="/practice/quiz" className="w-full">
                         <Button variant="secondary" className="w-full">
-                            Làm Quiz Trắc Nghiệm 📝
+                            Làm Quiz Trắc Nghiệm
                         </Button>
                     </Link>
                     <Link href="/practice/matching" className="w-full">
                         <Button variant="outline" className="w-full">
-                            Thử chế độ Nối Từ 🧩
+                            Thử chế độ Nối Từ
                         </Button>
                     </Link>
                     <Link href="/" className="w-full">
@@ -152,7 +152,7 @@ export function FlashcardView({ cards: initialCards, onBack }: FlashcardViewProp
             {/* Flashcard with Shadcn Card */}
             <Card
                 onClick={() => setShowAnswer((v) => !v)}
-                className="relative min-h-[340px] w-full cursor-pointer rounded-3xl border bg-card p-8 text-center shadow-sm transition-all duration-200 hover:shadow-md flex flex-col items-center justify-center select-none"
+                className="relative min-h-85 w-full cursor-pointer rounded-3xl border bg-card p-8 text-center shadow-sm transition-all duration-200 hover:shadow-md flex flex-col items-center justify-center select-none"
             >
                 <div className="absolute top-4 right-4" onClick={(e) => e.stopPropagation()}>
                     <WordAudio word={hanzi} />

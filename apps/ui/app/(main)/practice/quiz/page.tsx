@@ -19,7 +19,6 @@ import { Progress } from "@workspace/ui/components/progress"
 import { WordAudio } from "@/components/word-audio"
 import { getVocabularies } from "@/services/vocabulary.service"
 import { submitReview } from "@/services/review.service"
-import type { Vocabulary } from "@/types/vocabulary"
 import type { QuizQuestion } from "@/types/practice.types"
 import { PracticeNav } from "@/app/features/practice/practice-nav"
 
@@ -120,12 +119,12 @@ export default function QuizPage() {
             if (newStreak > maxStreak) setMaxStreak(newStreak)
             toast.success("Chính xác! 🎉", { duration: 1000 })
             // Submit SRS rating 2 (Good)
-            submitReview({ vocabulary_id: currentQ.word.id, rating: 2 }).catch(() => {})
+            submitReview({ vocabulary_id: currentQ.word.id, rating: 2 }).catch(() => { })
         } else {
             setStreak(0)
             toast.error(`Chưa chính xác! Đáp án đúng: ${currentQ.correctAnswer}`, { duration: 2500 })
             // Submit SRS rating 1 (Hard)
-            submitReview({ vocabulary_id: currentQ.word.id, rating: 1 }).catch(() => {})
+            submitReview({ vocabulary_id: currentQ.word.id, rating: 1 }).catch(() => { })
         }
     }
 

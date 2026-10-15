@@ -29,17 +29,17 @@ export function VocabularyHeader({ onAddSuccess }: VocabularyHeaderProps) {
     return (
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-                <h1 className="text-2xl font-bold tracking-tight">
-                    Vocabulary
+                <h1 className="text-xl font-bold tracking-tight">
+                    Kho từ vựng
                 </h1>
 
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs text-muted-foreground">
                     Quản lý kho từ vựng tiếng Trung cá nhân
                 </p>
             </div>
 
             <div className="flex items-center gap-2">
-                <ImportVocabularyDialog onSuccess={onAddSuccess} />
+                {/* <ImportVocabularyDialog onSuccess={onAddSuccess} /> */}
 
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>

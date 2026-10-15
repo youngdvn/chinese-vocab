@@ -1,9 +1,7 @@
 import {
     IconBolt,
-    IconBrain,
     IconHeadphones,
     IconHelpCircle,
-    IconPlus,
     IconPuzzle,
 } from "@tabler/icons-react"
 import Link from "next/link"
@@ -70,7 +68,7 @@ export function ContinueLearning({ waitingCount = 0 }: ContinueLearningProps) {
                 </Link>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 ">
                 {modes.map((mode) => {
                     const Icon = mode.icon
                     return (

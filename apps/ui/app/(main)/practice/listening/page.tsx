@@ -5,12 +5,10 @@ import Link from "next/link"
 import { toast } from "sonner"
 import {
     IconArrowLeft,
-    IconCheck,
     IconHeadphones,
     IconRefresh,
     IconTrophy,
     IconVolume,
-    IconX,
 } from "@tabler/icons-react"
 import { Button } from "@workspace/ui/components/button"
 import { Badge } from "@workspace/ui/components/badge"
@@ -122,10 +120,10 @@ export default function ListeningPracticePage() {
         if (isCorrect) {
             setScore((s) => s + 1)
             toast.success("Nghe chuẩn xác! 🎉", { duration: 1200 })
-            submitReview({ vocabulary_id: currentQ.correctWord.id, rating: 2 }).catch(() => {})
+            submitReview({ vocabulary_id: currentQ.correctWord.id, rating: 2 }).catch(() => { })
         } else {
             toast.error(`Chưa chính xác! Từ vừa phát âm là "${currentQ.correctWord.hanzi || currentQ.correctWord.chinese}"`)
-            submitReview({ vocabulary_id: currentQ.correctWord.id, rating: 1 }).catch(() => {})
+            submitReview({ vocabulary_id: currentQ.correctWord.id, rating: 1 }).catch(() => { })
         }
     }
 
@@ -227,9 +225,8 @@ export default function ListeningPracticePage() {
                     <Button
                         size="icon"
                         onClick={() => speak(currentHanzi, 0.9)}
-                        className={`size-24 rounded-full shadow-lg transition-all ${
-                            isPlaying ? "scale-105 ring-4 ring-primary/30" : "hover:scale-105"
-                        }`}
+                        className={`size-24 rounded-full shadow-lg transition-all ${isPlaying ? "scale-105 ring-4 ring-primary/30" : "hover:scale-105"
+                            }`}
                         title="Nghe lại phát âm"
                     >
                         <IconVolume size={42} />

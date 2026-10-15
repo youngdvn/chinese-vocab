@@ -45,7 +45,6 @@ export const menuSidebar = [
     { id: 1, label: "Trang chủ", href: "/", icon: IconLayout },
     { id: 2, label: "Kho từ vựng", href: "/vocabulary", icon: IconBook2 },
     { id: 3, label: "Ôn tập", href: "/practice", icon: IconBolt },
-    { id: 4, label: "Nối từ", href: "/practice/matching", icon: IconPuzzle },
     { id: 5, label: "Thống kê", href: "/stats", icon: IconChartBar },
     { id: 6, label: "Cài đặt", href: "/setting", icon: IconSettings },
 ]
