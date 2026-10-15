@@ -1,4 +1,4 @@
-import { apiClient } from "@/lib/api/client";
+import { apiClient, removeStoredToken } from "@/lib/api/client";
 
 import type {
     LoginPayload,
@@ -22,10 +22,14 @@ export function login(payload: LoginPayload) {
     });
 }
 
-export function logout() {
-    return apiClient<{ message: string }>("/api/auth/logout", {
-        method: "POST",
-    });
+export async function logout() {
+    try {
+        return await apiClient<{ message: string }>("/api/auth/logout", {
+            method: "POST",
+        });
+    } finally {
+        removeStoredToken();
+    }
 }
 
 export function getMe() {

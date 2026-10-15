@@ -16,7 +16,7 @@ export function speakChinese(
     const utterance = new SpeechSynthesisUtterance(text)
 
     utterance.lang = "zh-CN"
-    utterance.rate = 0.8
+    utterance.rate = 0.5
     utterance.pitch = 1
 
     utterance.onstart = () => {

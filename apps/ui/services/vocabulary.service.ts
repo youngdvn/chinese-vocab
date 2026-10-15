@@ -10,6 +10,8 @@ export interface VocabularyFilterParams {
     search?: string;
     status?: string;
     date?: string;
+    hsk_level?: string | number;
+    sort?: string;
     page?: number;
     limit?: number;
 }
@@ -19,6 +21,10 @@ export function getVocabularies(params?: VocabularyFilterParams) {
     if (params?.search) searchParams.set("search", params.search);
     if (params?.status && params.status !== "all") searchParams.set("status", params.status);
     if (params?.date && params.date !== "all") searchParams.set("date", params.date);
+    if (params?.hsk_level !== undefined && params.hsk_level !== "all") {
+        searchParams.set("hsk_level", params.hsk_level.toString());
+    }
+    if (params?.sort && params.sort !== "latest") searchParams.set("sort", params.sort);
     if (params?.page) searchParams.set("page", params.page.toString());
     if (params?.limit) searchParams.set("limit", params.limit.toString());
 

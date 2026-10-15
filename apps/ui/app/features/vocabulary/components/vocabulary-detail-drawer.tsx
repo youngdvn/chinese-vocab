@@ -42,10 +42,15 @@ export function VocabularyDetailDrawer({
         <Drawer open={open} onOpenChange={onOpenChange}>
             <DrawerContent className="max-w-lg mx-auto rounded-t-2xl max-h-[85vh]">
                 <DrawerHeader className="text-center pt-2 pb-4">
-                    <div className="flex justify-center mb-2">
+                    <div className="flex items-center justify-center gap-2 mb-2">
                         <Badge variant={statusBadge.variant} className="text-xs px-2.5 py-0.5">
                             {statusBadge.label}
                         </Badge>
+                        {word.hsk_level ? (
+                            <Badge variant="outline" className="text-xs px-2.5 py-0.5 font-medium border-primary/30 text-primary">
+                                HSK {word.hsk_level}
+                            </Badge>
+                        ) : null}
                     </div>
 
                     <DrawerTitle className="text-5xl font-bold tracking-wide text-primary">

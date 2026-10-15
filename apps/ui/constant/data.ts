@@ -5,7 +5,11 @@ import {
     IconBrightness,
     IconChartBar,
     IconDatabaseExport,
+    IconHeadphones,
+    IconHelpCircle,
+    IconKeyboard,
     IconLayout,
+    IconMessage2Ai,
     IconPuzzle,
     IconSettings,
     IconTarget,
@@ -45,6 +49,7 @@ export const menuSidebar = [
     { id: 1, label: "Trang chủ", href: "/", icon: IconLayout },
     { id: 2, label: "Kho từ vựng", href: "/vocabulary", icon: IconBook2 },
     { id: 3, label: "Ôn tập", href: "/practice", icon: IconBolt },
+    { id: 4, label: "Gia sư AI", href: "/ai-chat", icon: IconMessage2Ai },
     { id: 5, label: "Thống kê", href: "/stats", icon: IconChartBar },
     { id: 6, label: "Cài đặt", href: "/setting", icon: IconSettings },
 ]
@@ -86,15 +91,31 @@ export const statusFilters = [
     { label: "Tất cả", value: "all" },
     { label: "Từ mới", value: "new" },
     { label: "Đang học", value: "learning" },
+    { label: "Đã nhớ", value: "mastered" },
 ]
 
 export const dateFilters = [
-    { label: "Tất cả ngày", value: "all" },
-    { label: "Hôm nay", value: "2026-10-04" },
-    { label: "Hôm qua", value: "2026-10-03" },
-    { label: "02/10/2026", value: "2026-10-02" },
-    { label: "01/10/2026", value: "2026-10-01" },
-    { label: "30/09/2026", value: "2026-09-30" },
+    { label: "Tất cả", value: "all" },
+    { label: "Hôm nay", value: "today" },
+    { label: "7 ngày qua", value: "7days" },
+    { label: "30 ngày qua", value: "30days" },
+]
+
+export const hskFilters = [
+    { label: "Tất cả", value: "all" },
+    { label: "HSK 1", value: "1" },
+    { label: "HSK 2", value: "2" },
+    { label: "HSK 3", value: "3" },
+    { label: "HSK 4", value: "4" },
+    { label: "HSK 5", value: "5" },
+    { label: "HSK 6", value: "6" },
+]
+
+export const sortFilters = [
+    { label: "Mới nhất", value: "latest" },
+    { label: "Cũ nhất", value: "oldest" },
+    { label: "Bính âm A → Z", value: "pinyin_asc" },
+    { label: "Cấp độ HSK", value: "hsk_asc" },
 ]
 
 export const settings = [
@@ -130,5 +151,53 @@ export const settings = [
                 icon: IconDatabaseExport,
             },
         ],
+    },
+]
+
+export const modes = [
+    {
+        href: "/practice",
+        label: "Flashcard",
+        tagline: "Lật thẻ ghi nhớ",
+        description: "Lật thẻ phản xạ ghi nhớ Hán tự, Pinyin và ý nghĩa",
+        icon: IconBolt,
+        exact: true,
+        color: "text-amber-500 bg-amber-500/10 border-amber-500/20",
+    },
+    {
+        href: "/practice/matching",
+        label: "Nối Từ",
+        tagline: "Ghép Hán tự & nghĩa",
+        description: "Ghép cặp chữ Hán và nghĩa tiếng Việt tương ứng",
+        icon: IconPuzzle,
+        exact: false,
+        color: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20",
+    },
+    {
+        href: "/practice/quiz",
+        label: "Trắc Nghiệm",
+        tagline: "Chọn 1 trong 4 đáp án",
+        description: "Thử thách chọn đáp án đúng nhanh và chính xác",
+        icon: IconHelpCircle,
+        exact: false,
+        color: "text-indigo-500 bg-indigo-500/10 border-indigo-500/20",
+    },
+    {
+        href: "/practice/pinyin",
+        label: "Gõ Pinyin",
+        tagline: "Luyện gõ bính âm",
+        description: "Luyện gõ chính xác phiên âm Pinyin của từ vựng",
+        icon: IconKeyboard,
+        exact: false,
+        color: "text-sky-500 bg-sky-500/10 border-sky-500/20",
+    },
+    {
+        href: "/practice/listening",
+        label: "Luyện Nghe",
+        tagline: "Nghe phát âm chuẩn",
+        description: "Luyện nghe phát âm chuẩn và nhận diện từ vựng đúng",
+        icon: IconHeadphones,
+        exact: false,
+        color: "text-rose-500 bg-rose-500/10 border-rose-500/20",
     },
 ]
