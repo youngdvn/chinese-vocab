@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { useState } from "react"
-
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { Label } from "@workspace/ui/components/label"
@@ -19,72 +18,69 @@ export function RegisterForm() {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState("")
+
     const form = useForm<RegisterFormValues>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
             name: "",
             email: "",
             password: "",
-            confirmPassword: ""
-        }
+            confirmPassword: "",
+        },
     })
 
     async function onSubmit(values: RegisterFormValues) {
         setLoading(true)
         setServerError("")
         try {
-
-            const user = await register({
+            await register({
                 name: values.name,
                 email: values.email,
-                password: values.password
+                password: values.password,
             })
-            console.log(user)
-            toast.success("Account created successfully", {
-                description: "You can now sign in to your account.",
+
+            toast.success("Tạo tài khoản thành công!", {
+                description: "Chào mừng bạn gia nhập ChiNex.",
             })
             router.push("/")
-        }
-        catch (err) {
+        } catch (err) {
             const message =
                 err instanceof Error
                     ? err.message
-                    : "Something went wrong"
+                    : "Đã có lỗi xảy ra trong quá trình đăng ký"
 
             setServerError(message)
 
-            toast.error("Registration failed", {
+            toast.error("Đăng ký không thành công", {
                 description: message,
             })
-        }
-        finally {
+        } finally {
             setLoading(false)
         }
-
     }
 
     return (
         <div className="space-y-6">
             <div className="space-y-2 text-center">
                 <h1 className="text-2xl font-bold tracking-tight">
-                    Create an account
+                    Tạo tài khoản mới
                 </h1>
 
                 <p className="text-sm text-muted-foreground">
-                    Start your Chinese learning journey
+                    Bắt đầu hành trình chinh phục tiếng Trung của bạn
                 </p>
             </div>
 
             <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
                 <div className="space-y-2">
                     <Label htmlFor="name">
-                        Name
+                        Họ và tên
                     </Label>
 
                     <Input
                         id="name"
                         type="text"
-                        placeholder="Your name"
+                        placeholder="Nguyễn Văn A"
                         autoComplete="name"
                         {...form.register("name")}
                     />
@@ -104,7 +100,8 @@ export function RegisterForm() {
                         id="email"
                         type="email"
                         placeholder="you@example.com"
-                        autoComplete="email" required
+                        autoComplete="email"
+                        required
                         {...form.register("email")}
                     />
                 </div>
@@ -116,7 +113,7 @@ export function RegisterForm() {
 
                 <div className="space-y-2">
                     <Label htmlFor="password">
-                        Password
+                        Mật khẩu
                     </Label>
                     <div className="relative">
                         <Input
@@ -130,13 +127,11 @@ export function RegisterForm() {
 
                         <button
                             type="button"
-                            onClick={() =>
-                                setShowPassword(!showPassword)
-                            }
+                            onClick={() => setShowPassword(!showPassword)}
+                            aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
                             className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground"
                         >
-                            {showPassword ? (<IconEye size={16} />) : (<IconEyeClosed size={16} />)}
-
+                            {showPassword ? <IconEye size={16} /> : <IconEyeClosed size={16} />}
                         </button>
                     </div>
                     {form.formState.errors.password && (
@@ -148,7 +143,7 @@ export function RegisterForm() {
 
                 <div className="space-y-2">
                     <Label htmlFor="confirmPassword">
-                        Confirm password
+                        Xác nhận mật khẩu
                     </Label>
 
                     <Input
@@ -176,17 +171,17 @@ export function RegisterForm() {
                     className="w-full"
                     disabled={loading}
                 >
-                    {loading ? "Creating..." : " Create account"}
+                    {loading ? "Đang tạo tài khoản..." : "Đăng ký tài khoản"}
                 </Button>
             </form>
 
             <p className="text-center text-sm text-muted-foreground">
-                Already have an account?{" "}
+                Đã có tài khoản?{" "}
                 <Link
                     href="/login"
                     className="font-medium text-primary hover:underline"
                 >
-                    Sign in
+                    Đăng nhập
                 </Link>
             </p>
         </div>

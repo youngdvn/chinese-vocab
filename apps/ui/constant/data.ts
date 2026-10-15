@@ -3,8 +3,10 @@ import {
     IconBolt,
     IconBook2,
     IconBrightness,
+    IconChartBar,
     IconDatabaseExport,
     IconLayout,
+    IconPuzzle,
     IconSettings,
     IconTarget,
 } from "@tabler/icons-react"
@@ -40,10 +42,12 @@ export const dailyVocab = [
 ]
 
 export const menuSidebar = [
-    { id: 1, label: "Home", href: "/", icon: IconLayout },
-    { id: 2, label: "Vocabulary", href: "/vocabulary", icon: IconBook2 },
-    { id: 3, label: "Practice", href: "/practice", icon: IconBolt },
-    { id: 4, label: "Setting", href: "/setting", icon: IconSettings },
+    { id: 1, label: "Trang chủ", href: "/", icon: IconLayout },
+    { id: 2, label: "Kho từ vựng", href: "/vocabulary", icon: IconBook2 },
+    { id: 3, label: "Ôn tập", href: "/practice", icon: IconBolt },
+    { id: 4, label: "Nối từ", href: "/practice/matching", icon: IconPuzzle },
+    { id: 5, label: "Thống kê", href: "/stats", icon: IconChartBar },
+    { id: 6, label: "Cài đặt", href: "/setting", icon: IconSettings },
 ]
 
 export const words: Vocabulary[] = [
@@ -80,50 +84,50 @@ export const words: Vocabulary[] = [
 ]
 
 export const statusFilters = [
-    { label: "All", value: "all" },
-    { label: "New", value: "new" },
-    { label: "Learning", value: "learning" },
+    { label: "Tất cả", value: "all" },
+    { label: "Từ mới", value: "new" },
+    { label: "Đang học", value: "learning" },
 ]
 
 export const dateFilters = [
-    { label: "All dates", value: "all" },
-    { label: "Today", value: "2026-10-04" },
-    { label: "Yesterday", value: "2026-10-03" },
-    { label: "Oct 2, 2026", value: "2026-10-02" },
-    { label: "Oct 1, 2026", value: "2026-10-01" },
-    { label: "Sep 30, 2026", value: "2026-09-30" },
+    { label: "Tất cả ngày", value: "all" },
+    { label: "Hôm nay", value: "2026-10-04" },
+    { label: "Hôm qua", value: "2026-10-03" },
+    { label: "02/10/2026", value: "2026-10-02" },
+    { label: "01/10/2026", value: "2026-10-01" },
+    { label: "30/09/2026", value: "2026-09-30" },
 ]
 
 export const settings = [
     {
-        title: "Appearance",
+        title: "Giao diện",
         items: [
             {
-                label: "Theme",
+                label: "Chế độ nền",
                 href: "/setting/theme",
-                description: "System",
+                description: "Hệ thống",
                 icon: IconBrightness,
             },
         ],
     },
     {
-        title: "Learning",
+        title: "Học tập",
         items: [
             {
-                label: "Daily goal",
+                label: "Mục tiêu hàng ngày",
                 href: "/setting/daily-goal",
-                description: "20 words per day",
+                description: "20 từ mỗi ngày",
                 icon: IconTarget,
             },
         ],
     },
     {
-        title: "Data",
+        title: "Dữ liệu",
         items: [
             {
-                label: "Export vocabulary",
+                label: "Xuất từ vựng",
                 href: "/setting/export",
-                description: "Export your vocabulary data",
+                description: "Xuất dữ liệu ra tệp JSON",
                 icon: IconDatabaseExport,
             },
         ],

@@ -1,20 +1,27 @@
-"use client";
+"use client"
 
-import { IconBrightness, IconMoon, IconSun } from "@tabler/icons-react";
-import { useTheme } from "next-themes";
+import { IconArrowLeft, IconBrightness, IconMoon, IconSun } from "@tabler/icons-react"
+import { useTheme } from "next-themes"
+import Link from "next/link"
 import { RadioGroup, RadioGroupItem } from "@workspace/ui/components/radio-group"
-import { Label } from "@workspace/ui/components/label";
-
+import { Label } from "@workspace/ui/components/label"
 
 export default function SettingTheme() {
-    const { theme, setTheme } = useTheme();
+    const { theme, setTheme } = useTheme()
 
     return (
-        <div className="flex flex-col gap-4 p-4">
+        <div className="mx-auto flex w-full max-w-2xl flex-col gap-5 p-4 md:p-6">
             <div>
-                <h2 className="text-2xl font-bold">Theme</h2>
+                <Link
+                    href="/setting"
+                    className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors w-fit mb-2"
+                >
+                    <IconArrowLeft size={14} />
+                    Cài đặt
+                </Link>
+                <h1 className="text-2xl font-bold tracking-tight">Giao diện (Theme)</h1>
                 <p className="text-sm text-muted-foreground">
-                    Choose how the application looks.
+                    Tùy chỉnh chế độ hiển thị sáng, tối hoặc theo thiết bị.
                 </p>
             </div>
 
@@ -26,26 +33,26 @@ export default function SettingTheme() {
                 <ThemeOption
                     value="light"
                     icon={<IconSun className="size-5" />}
-                    title="Light"
-                    description="Light theme"
+                    title="Nền sáng"
+                    description="Giao diện sáng dễ nhìn vào ban ngày"
                 />
 
                 <ThemeOption
                     value="dark"
                     icon={<IconMoon className="size-5" />}
-                    title="Dark"
-                    description="Dark theme"
+                    title="Nền tối"
+                    description="Giao diện tối dịu mắt, tiết kiệm pin"
                 />
 
                 <ThemeOption
                     value="system"
                     icon={<IconBrightness className="size-5" />}
-                    title="System"
-                    description="Use system theme"
+                    title="Hệ thống"
+                    description="Tự động đồng bộ theo cài đặt thiết bị của bạn"
                 />
             </RadioGroup>
         </div>
-    );
+    )
 }
 
 function ThemeOption({
@@ -54,31 +61,29 @@ function ThemeOption({
     title,
     description,
 }: {
-    value: string;
-    icon: React.ReactNode;
-    title: string;
-    description: string;
+    value: string
+    icon: React.ReactNode
+    title: string
+    description: string
 }) {
     return (
         <Label
             htmlFor={value}
-            className="flex justify-between items-center gap-3 rounded-xl border shadow-sm p-4 transition-colors hover:bg-accent"
+            className="flex justify-between items-center gap-3 rounded-xl border bg-card shadow-xs p-4 transition-colors hover:bg-muted/50 cursor-pointer"
         >
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-3 items-center">
                 <RadioGroupItem value={value} id={value} />
 
-                <div className="flex items-center gap-3">
-                    <div>
-                        <p className="text-sm font-medium">{title}</p>
-                        <p className="text-xs text-muted-foreground">
-                            {description}
-                        </p>
-                    </div>
+                <div>
+                    <p className="text-sm font-semibold">{title}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                        {description}
+                    </p>
                 </div>
             </div>
-            <div className="flex size-9 items-center justify-center">
+            <div className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 {icon}
             </div>
         </Label>
-    );
+    )
 }

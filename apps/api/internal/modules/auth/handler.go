@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/duycao04/chinese-vocab/apps/api/lib"
 )
 
 type Handler struct {
@@ -53,6 +55,28 @@ func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 			"message": "Đã xảy ra lỗi hệ thống",
 		})
 		return
+	}
+
+	if h.tokenService != nil {
+		token, expiresAt, err := h.tokenService.Generate(user.ID)
+		if err == nil {
+			secure := os.Getenv("APP_ENV") == "production"
+			sameSite := http.SameSiteLaxMode
+			if secure {
+				sameSite = http.SameSiteNoneMode
+			}
+
+			http.SetCookie(w, &http.Cookie{
+				Name:     "access_token",
+				Value:    token,
+				Path:     "/",
+				HttpOnly: true,
+				Secure:   secure,
+				SameSite: sameSite,
+				Expires:  expiresAt,
+				MaxAge:   int(time.Until(expiresAt).Seconds()),
+			})
+		}
 	}
 
 	writeJSON(w, http.StatusCreated, user)
@@ -133,6 +157,64 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 		Expires:  expiresAt,
 		MaxAge:   int(time.Until(expiresAt).Seconds()),
 	})
+
+	writeJSON(w, http.StatusOK, user)
+}
+
+func (h *Handler) Logout(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]string{
+			"message": "Method Not Allowed",
+		})
+		return
+	}
+
+	secure := os.Getenv("APP_ENV") == "production"
+	sameSite := http.SameSiteLaxMode
+	if secure {
+		sameSite = http.SameSiteNoneMode
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "access_token",
+		Value:    "",
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   secure,
+		SameSite: sameSite,
+		Expires:  time.Unix(0, 0),
+		MaxAge:   -1,
+	})
+
+	writeJSON(w, http.StatusOK, map[string]string{
+		"message": "Đăng xuất thành công",
+	})
+}
+
+func (h *Handler) Me(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		writeJSON(w, http.StatusMethodNotAllowed, map[string]string{
+			"message": "Method Not Allowed",
+		})
+		return
+	}
+
+	userID, err := lib.GetUserID(r.Context())
+	if err != nil {
+		writeJSON(w, http.StatusUnauthorized, map[string]string{
+			"message": "Không tìm thấy thông tin xác thực",
+		})
+		return
+	}
+
+	user, err := h.service.GetMe(r.Context(), userID)
+	if err != nil {
+		log.Printf("get me error: %v", err)
+		writeJSON(w, http.StatusInternalServerError, map[string]string{
+			"message": "Đã xảy ra lỗi hệ thống",
+		})
+		return
+	}
 
 	writeJSON(w, http.StatusOK, user)
 }

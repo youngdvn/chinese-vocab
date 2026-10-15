@@ -1,0 +1,41 @@
+# ChiNex Test Execution Summary
+
+> Cập nhật lần cuối: **23:12:08 14/10/2026**  
+> Trạng thái tổng quan: **PASSED (THÀNH CÔNG)**
+
+---
+
+## 📊 Kết Quả API End-to-End Tests (11 endpoints)
+
+| Endpoint / Luồng Nghiệp Vụ | Trạng thái |
+| :--- | :--- |
+| GET /api/ping (Health Check) | ✅ PASS |
+| POST /api/auth/register & Login | ✅ PASS |
+| GET /api/auth/me (Current User Profile) | ✅ PASS |
+| POST /api/v1/vocabularies (Create Vocabulary) | ✅ PASS |
+| GET /api/v1/vocabularies (List & Filter) | ✅ PASS |
+| GET /api/v1/dashboard/overview (Stats) | ✅ PASS |
+| GET /api/v1/dashboard/daily-progress (Daily Goals) | ✅ PASS |
+| GET /api/v1/reviews/practice (Flashcard Session) | ✅ PASS |
+| POST /api/v1/reviews (Submit SRS Review Rating 2) | ✅ PASS |
+| PATCH /api/v1/users/settings (Update Daily Goal) | ✅ PASS |
+| GET /api/v1/vocabularies/export (Export JSON) | ✅ PASS |
+
+## 🧪 Kết Quả Go Package Tests
+
+```
+?   	github.com/duycao04/chinese-vocab/apps/api/cmd/migrate	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/cmd/server	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/database	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/middleware	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/auth	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/dashboard	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/review	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/user	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/vocabulary	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/lib	[no test files]
+```
+
+---
+
+*Log chi tiết đầy đủ có thể xem tại [latest-test-run.log](./latest-test-run.log)*

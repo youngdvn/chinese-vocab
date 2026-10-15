@@ -3,6 +3,7 @@ package auth
 import (
 	"errors"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/duycao04/chinese-vocab/apps/api/lib"
@@ -51,4 +52,28 @@ func (s *TokenService) Generate(userID int64) (string, time.Time, error) {
 	}
 
 	return signedToken, expiresAt, nil
+}
+
+func (s *TokenService) Validate(tokenString string) (int64, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &jwt.RegisteredClaims{}, func(t *jwt.Token) (any, error) {
+		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("unexpected signing method")
+		}
+		return s.secret, nil
+	})
+	if err != nil {
+		return 0, err
+	}
+
+	claims, ok := token.Claims.(*jwt.RegisteredClaims)
+	if !ok || !token.Valid {
+		return 0, errors.New("invalid token")
+	}
+
+	userID, err := strconv.ParseInt(claims.Subject, 10, 64)
+	if err != nil {
+		return 0, errors.New("invalid user id in token claims")
+	}
+
+	return userID, nil
 }

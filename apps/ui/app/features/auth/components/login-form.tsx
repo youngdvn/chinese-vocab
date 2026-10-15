@@ -1,4 +1,3 @@
-
 "use client"
 
 import Link from "next/link"
@@ -39,14 +38,14 @@ export function LoginForm() {
         try {
             await login(values)
 
-            toast.success("Login successful!")
+            toast.success("Đăng nhập thành công!")
             router.replace("/")
             router.refresh()
         } catch (error) {
             const message =
                 error instanceof Error
                     ? error.message
-                    : "Unable to sign in. Please try again."
+                    : "Không thể đăng nhập. Vui lòng kiểm tra lại email hoặc mật khẩu."
 
             toast.error(message)
         }
@@ -57,11 +56,11 @@ export function LoginForm() {
             <div className="mb-8 text-center">
                 <div className="space-y-2">
                     <h1 className="text-3xl font-bold tracking-tight">
-                        Welcome back
+                        Chào mừng trở lại
                     </h1>
 
                     <p className="text-sm leading-6 text-muted-foreground">
-                        Pick up where you left off and keep learning Chinese.
+                        Tiếp tục hành trình học từ vựng tiếng Trung mỗi ngày.
                     </p>
                 </div>
             </div>
@@ -92,13 +91,13 @@ export function LoginForm() {
 
                 <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password">Mật khẩu</Label>
 
                         <Link
                             href="/forgot-password"
                             className="text-xs text-primary hover:underline"
                         >
-                            Forgot password?
+                            Quên mật khẩu?
                         </Link>
                     </div>
 
@@ -120,8 +119,8 @@ export function LoginForm() {
                             }
                             aria-label={
                                 showPassword
-                                    ? "Hide password"
-                                    : "Show password"
+                                    ? "Ẩn mật khẩu"
+                                    : "Hiện mật khẩu"
                             }
                             className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                         >
@@ -145,17 +144,17 @@ export function LoginForm() {
                     className="w-full"
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? "Signing in..." : "Sign In"}
+                    {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
                 </Button>
             </form>
 
             <p className="text-center text-sm text-muted-foreground">
-                Don&apos;t have an account?{" "}
+                Chưa có tài khoản?{" "}
                 <Link
                     href="/register"
                     className="font-medium text-primary hover:underline"
                 >
-                    Create account
+                    Đăng ký ngay
                 </Link>
             </p>
         </div>

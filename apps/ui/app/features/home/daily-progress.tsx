@@ -1,106 +1,82 @@
 "use client"
 
-import { dailyVocab } from "@/constant/data"
 import { Progress } from "@workspace/ui/components/progress"
+import { Badge } from "@workspace/ui/components/badge"
+import { WordAudio } from "@/components/word-audio"
+import type { DailyProgress as DailyProgressType } from "@/types/dashboard.types"
 
-export default function DailyProgress() {
-    // const [statusVocab, setStatusVocab] = useState(dailyVocab)
+interface DailyProgressProps {
+    progress?: DailyProgressType | null
+}
 
-    // const toggleLearned = (id: number) => {
-    //     setStatusVocab((prev) =>
-    //         prev.map((item) =>
-    //             item.id === id
-    //                 ? {
-    //                     ...item,
-    //                     learned: !item.learned,
-    //                 }
-    //                 : item
-    //         )
-    //     )
-    // }
+export function DailyProgress({ progress }: DailyProgressProps) {
+    const dailyGoal = progress?.daily_goal ?? 20
+    const learnedCount = progress?.learned_today ?? 0
+    const progressPercent = progress?.progress_percentage ?? 0
+    const words = progress?.words ?? []
 
-    // const toggleToReview = (id: number) => {
-    //     setStatusVocab((prev) =>
-    //         prev.map((item) =>
-    //             item.id === id
-    //                 ? {
-    //                     ...item,
-    //                     toReview: !item.toReview,
-    //                 }
-    //                 : item
-    //         )
-    //     )
-    // }
-
-    const learningCount = dailyVocab.filter((item) => item.status === "learning").length
-    const totalCount = dailyVocab.length
-    const progress =
-        totalCount > 0 ? (learningCount / totalCount) * 100 : 0
     return (
         <section className="flex flex-col gap-4 px-4">
             <div>
                 <h2 className="text-lg font-semibold tracking-tight text-primary">
-                    Daily Progress
+                    Tiến độ học hôm nay
                 </h2>
 
                 <div className="mt-3">
                     <div className="mb-2 flex items-center justify-between">
                         <p className="text-sm text-muted-foreground">
-                            Learned / Remaining
+                            Đã học / Mục tiêu
                         </p>
 
                         <p className="text-sm font-semibold">
-                            {learningCount} / {totalCount}
+                            {learnedCount} / {dailyGoal} từ
                         </p>
                     </div>
 
                     <Progress
-                        value={progress}
-                        className="w-full"
+                        value={progressPercent}
+                        className="w-full h-2"
                     />
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3">
-                {dailyVocab.map((item) => (
-                    <div
-                        key={item.id}
-                        className="flex flex-col items-center gap-2 rounded-lg border bg-card p-4 shadow-sm transition-all hover:-translate-y-0. hover:shadow-md"
-                    >
-                        <p className="text-lg font-semibold">
-                            {item.hanyu}
-                        </p>
+            {words.length > 0 ? (
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3">
+                    {words.map((item) => (
+                        <div
+                            key={item.id}
+                            className="relative flex flex-col items-center gap-2 rounded-xl border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md text-center"
+                        >
+                            <div className="absolute top-2 right-2">
+                                <WordAudio word={item.hanzi} />
+                            </div>
 
-                        <p className="text-sm text-muted-foreground">
-                            {item.pinyin}
-                        </p>
+                            <p className="text-2xl font-bold mt-2">
+                                {item.hanzi}
+                            </p>
 
-                        <p className="text-sm">
-                            {item.mean}
-                        </p>
+                            <p className="text-sm text-muted-foreground">
+                                {item.pinyin}
+                            </p>
 
-                        {/* <div className="mt-2 flex w-full gap-2">
-                            <Button
-                                size="sm"
-                                variant={item.learned ? "default" : "outline"}
-                                className="flex-1"
-                                onClick={() => toggleLearned(item.id)}
+                            <p className="text-sm font-medium line-clamp-1">
+                                {item.meaning}
+                            </p>
+
+                            <Badge
+                                variant={item.learned_today ? "default" : "secondary"}
+                                className="mt-1 text-[10px]"
                             >
-                                {item.learned ? "Learned" : "Learned"}
-                            </Button>
-
-                            <Button
-                                size="sm"
-                                variant={item.toReview ? "default" : "outline"}
-                                className="flex-1"
-                                onClick={() => toggleToReview(item.id)}
-                            >
-                                {item.toReview ? "Review" : "Review"}
-                            </Button>
-                        </div> */}
-                    </div>
-                ))}
-            </div>
+                                {item.learned_today ? "Đã ôn hôm nay" : item.status === "new" ? "Từ mới" : "Cần ôn"}
+                            </Badge>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground">
+                    Chưa có từ vựng nào trong danh sách hôm nay. Hãy thêm từ vựng mới để bắt đầu học!
+                </div>
+            )}
         </section>
     )
 }
