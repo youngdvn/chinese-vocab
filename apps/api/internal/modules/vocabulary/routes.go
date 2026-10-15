@@ -5,25 +5,30 @@ import "net/http"
 func RegisterRoutes(
 	mux *http.ServeMux,
 	handler *Handler,
+	authMiddleware func(http.Handler) http.Handler,
 ) {
-	mux.HandleFunc(
+	mux.Handle(
 		"POST /api/v1/vocabularies",
-		handler.Create,
+		authMiddleware(http.HandlerFunc(handler.Create)),
 	)
-	mux.HandleFunc(
+	mux.Handle(
 		"GET /api/v1/vocabularies",
-		handler.FindAll,
+		authMiddleware(http.HandlerFunc(handler.FindAll)),
 	)
-	mux.HandleFunc(
+	mux.Handle(
+		"GET /api/v1/vocabularies/export",
+		authMiddleware(http.HandlerFunc(handler.Export)),
+	)
+	mux.Handle(
 		"GET /api/v1/vocabularies/{id}",
-		handler.FindByID,
+		authMiddleware(http.HandlerFunc(handler.FindByID)),
 	)
-	mux.HandleFunc(
+	mux.Handle(
 		"PATCH /api/v1/vocabularies/{id}",
-		handler.Update,
+		authMiddleware(http.HandlerFunc(handler.Update)),
 	)
-	mux.HandleFunc(
+	mux.Handle(
 		"DELETE /api/v1/vocabularies/{id}",
-		handler.Delete,
+		authMiddleware(http.HandlerFunc(handler.Delete)),
 	)
 }

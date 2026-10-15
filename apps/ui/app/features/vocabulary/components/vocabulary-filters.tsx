@@ -56,7 +56,7 @@ export function VocabularyFilters({
                     onChange={(e) =>
                         onSearchChange(e.target.value)
                     }
-                    placeholder="Search vocabulary..."
+                    placeholder="Tìm kiếm từ vựng (Hán tự, Pinyin, nghĩa)..."
                     className="h-9 pl-10"
                 />
             </div>
@@ -64,7 +64,7 @@ export function VocabularyFilters({
             <div className="grid grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1">
                     <Label className="text-xs text-muted-foreground">
-                        Status
+                        Trạng thái
                     </Label>
 
                     <Select
@@ -90,7 +90,7 @@ export function VocabularyFilters({
 
                 <div className="flex flex-col gap-1">
                     <Label className="text-xs text-muted-foreground">
-                        Date
+                        Ngày tạo
                     </Label>
 
                     <Select
@@ -123,7 +123,7 @@ export function VocabularyFilters({
                     className="w-full"
                 >
                     <IconX size={16} />
-                    Clear filters
+                    Xóa bộ lọc
                 </Button>
             )}
         </section>

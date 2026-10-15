@@ -9,6 +9,9 @@ import (
 	"github.com/duycao04/chinese-vocab/apps/api/internal/database"
 	"github.com/duycao04/chinese-vocab/apps/api/internal/middleware"
 	"github.com/duycao04/chinese-vocab/apps/api/internal/modules/auth"
+	"github.com/duycao04/chinese-vocab/apps/api/internal/modules/dashboard"
+	"github.com/duycao04/chinese-vocab/apps/api/internal/modules/review"
+	"github.com/duycao04/chinese-vocab/apps/api/internal/modules/user"
 	"github.com/duycao04/chinese-vocab/apps/api/internal/modules/vocabulary"
 	"github.com/joho/godotenv"
 )
@@ -39,23 +42,47 @@ func main() {
 		fmt.Fprint(w, `{"status":"ok"}`)
 	})
 
-	// Vocabulary module
-	vocabularyRepository := vocabulary.NewRepository(db)
-	vocabularyService := vocabulary.NewService(vocabularyRepository)
-	vocabularyHandler := vocabulary.NewHandler(vocabularyService)
-
-	vocabulary.RegisterRoutes(mux, vocabularyHandler)
-
+	// Auth module
 	tokenService, err := auth.NewTokenService()
 	if err != nil {
 		log.Fatalf("failed to initialize token service: %v", err)
 	}
 
+	authMiddleware := middleware.Auth(tokenService)
+
 	authRepository := auth.NewRepository(db)
 	authService := auth.NewService(authRepository)
 	authHandler := auth.NewHandler(authService, tokenService)
 
-	auth.RegisterRoutes(mux, authHandler)
+	auth.RegisterRoutes(mux, authHandler, authMiddleware)
+
+	// User module
+	userRepository := user.NewRepository(db)
+	userService := user.NewService(userRepository)
+	userHandler := user.NewHandler(userService)
+
+	user.RegisterRoutes(mux, userHandler, authMiddleware)
+
+	// Vocabulary module
+	vocabularyRepository := vocabulary.NewRepository(db)
+	vocabularyService := vocabulary.NewService(vocabularyRepository)
+	vocabularyHandler := vocabulary.NewHandler(vocabularyService)
+
+	vocabulary.RegisterRoutes(mux, vocabularyHandler, authMiddleware)
+
+	// Review module
+	reviewRepository := review.NewRepository(db)
+	reviewService := review.NewService(reviewRepository)
+	reviewHandler := review.NewHandler(reviewService)
+
+	review.RegisterRoutes(mux, reviewHandler, authMiddleware)
+
+	// Dashboard module
+	dashboardRepository := dashboard.NewRepository(db)
+	dashboardService := dashboard.NewService(dashboardRepository)
+	dashboardHandler := dashboard.NewHandler(dashboardService)
+
+	dashboard.RegisterRoutes(mux, dashboardHandler, authMiddleware)
 
 	handler := middleware.CORS(mux)
 

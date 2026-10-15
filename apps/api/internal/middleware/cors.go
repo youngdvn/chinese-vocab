@@ -1,15 +1,32 @@
 package middleware
 
-import "net/http"
+import (
+	"net/http"
+	"strings"
+)
+
+func isAllowedOrigin(origin string) bool {
+	if origin == "http://localhost:2611" ||
+		origin == "http://localhost:3000" ||
+		origin == "http://127.0.0.1:2611" ||
+		origin == "http://127.0.0.1:3000" ||
+		origin == "https://chinese-vocab-self.vercel.app" {
+		return true
+	}
+	if strings.HasPrefix(origin, "http://localhost:") || strings.HasPrefix(origin, "http://127.0.0.1:") {
+		return true
+	}
+	if strings.HasSuffix(origin, ".vercel.app") {
+		return true
+	}
+	return false
+}
 
 func CORS(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := r.Header.Get("Origin")
 
-		if origin == "http://localhost:2611" ||
-			origin == "http://localhost:3000" ||
-			origin == "https://chinese-vocab-self.vercel.app" {
-
+		if origin != "" && isAllowedOrigin(origin) {
 			w.Header().Set("Access-Control-Allow-Origin", origin)
 			w.Header().Set("Access-Control-Allow-Credentials", "true")
 			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")

@@ -1,72 +1,29 @@
 "use client"
 
 import { useState } from "react"
-import { IconChevronRight } from "@tabler/icons-react"
+import { WordSelection } from "@/app/features/practice/components/word-selection"
+import { FlashcardView } from "@/app/features/practice/components/flashcard-view"
+import type { FlashCard, PracticePhase } from "@/types/practice.types"
+import type { Vocabulary } from "@/types/vocabulary"
 
-export default function ReviewPage() {
-    const [showAnswer, setShowAnswer] = useState(false)
+export default function PracticePage() {
+    const [phase, setPhase] = useState<PracticePhase>("select")
+    const [practiceCards, setPracticeCards] = useState<FlashCard[]>([])
 
-    return (
-        <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col items-center justify-center gap-6 py-4 px-16">
-            <div className="w-full text-center">
-                <p className="text-sm text-muted-foreground">
-                    12 cards remaining
-                </p>
+    const handleStart = (words: Vocabulary[]) => {
+        const cards: FlashCard[] = words.map((w) => ({ ...w, reviewed: false }))
+        setPracticeCards(cards)
+        setPhase("practice")
+    }
 
-                <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
-                    <div className="h-full w-[35%] rounded-full bg-primary" />
-                </div>
-            </div>
+    const handleBack = () => {
+        setPhase("select")
+        setPracticeCards([])
+    }
 
-            <button
-                onClick={() => setShowAnswer(!showAnswer)}
-                className="min-h-87.5 w-full rounded-3xl border bg-card p-8 text-center shadow-sm transition hover:shadow-md"
-            >
-                <p className="text-6xl font-bold">学习</p>
+    if (phase === "practice") {
+        return <FlashcardView cards={practiceCards} onBack={handleBack} />
+    }
 
-                <p className="mt-4 text-xl text-muted-foreground">
-                    xuéxí
-                </p>
-
-                {showAnswer ? (
-                    <div className="mt-10">
-                        <p className="text-lg font-medium">Học tập</p>
-                        <p className="mt-2 text-sm text-muted-foreground">
-                            我喜欢学习中文。
-                        </p>
-                    </div>
-                ) : (
-                    <p className="mt-16 text-sm text-muted-foreground">
-                        Tap to reveal
-                    </p>
-                )}
-            </button>
-
-            {showAnswer && (
-                <div className="grid w-full grid-cols-3 gap-3">
-                    <button className="rounded-lg border py-2 text-sm hover:bg-muted">
-                        Hard
-                    </button>
-
-                    <button className="rounded-lg bg-primary py-2 text-sm text-primary-foreground">
-                        Good
-                    </button>
-
-                    <button className="rounded-lg border py-2 text-sm hover:bg-muted">
-                        Easy
-                    </button>
-                </div>
-            )}
-
-            {!showAnswer && (
-                <button
-                    onClick={() => setShowAnswer(true)}
-                    className="flex items-center gap-1 text-sm text-primary"
-                >
-                    Show answer
-                    <IconChevronRight size={16} />
-                </button>
-            )}
-        </main>
-    )
+    return <WordSelection onStart={handleStart} />
 }

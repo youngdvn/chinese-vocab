@@ -1,0 +1,16 @@
+================================================================================
+CHI-NEX TEST RUN REPORT
+Thời gian chạy: 23:10:44 14/10/2026
+Trạng thái: PASSED (THÀNH CÔNG)
+================================================================================
+
+?   	github.com/duycao04/chinese-vocab/apps/api/cmd/migrate	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/cmd/server	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/database	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/middleware	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/auth	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/dashboard	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/review	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/user	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/vocabulary	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/lib	[no test files]

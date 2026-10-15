@@ -5,9 +5,13 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "dev:api": "pnpm --filter api dev",
+    "dev:ui": "pnpm --filter web dev",
     "lint": "turbo lint",
     "format": "turbo format",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "test": "node tests/run-tests.mjs",
+    "test:api": "node tests/run-tests.mjs"
   },
   "devDependencies": {
     "@workspace/eslint-config": "workspace:*",

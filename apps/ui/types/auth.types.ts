@@ -20,3 +20,10 @@ export type LoginResponse = {
     email: string
     name: string
 }
+
+export type UserResponse = {
+    id: number
+    email: string
+    name: string
+    created_at?: string
+}

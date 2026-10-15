@@ -83,3 +83,22 @@ func (s *Service) Login(
 		Name:  name,
 	}, nil
 }
+
+func (s *Service) GetMe(ctx context.Context, userID int64) (*UserResponse, error) {
+	user, err := s.repository.FindUserByID(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	name := ""
+	if user.Name != nil {
+		name = *user.Name
+	}
+
+	return &UserResponse{
+		ID:        user.ID,
+		Email:     user.Email,
+		Name:      name,
+		CreatedAt: user.CreatedAt,
+	}, nil
+}

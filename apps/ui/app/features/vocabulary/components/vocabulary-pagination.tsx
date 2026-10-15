@@ -39,6 +39,7 @@ export function VocabularyPagination({
                 <PaginationItem>
                     <PaginationPrevious
                         href="#"
+                        text="Trang trước"
                         className={
                             currentPage === 1
                                 ? "pointer-events-none opacity-50"
@@ -75,6 +76,7 @@ export function VocabularyPagination({
                 <PaginationItem>
                     <PaginationNext
                         href="#"
+                        text="Trang sau"
                         className={
                             currentPage === totalPages
                                 ? "pointer-events-none opacity-50"

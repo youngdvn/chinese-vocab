@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
-
-import { words } from "@/constant/data"
+import { useCallback, useEffect, useState } from "react"
+import { toast } from "sonner"
+import type { Vocabulary } from "@/types/vocabulary"
+import { deleteVocabulary, getVocabularies } from "@/services/vocabulary.service"
 
 import { VocabularyHeader } from "./components/vocabulary-header"
 import { VocabularyFilters } from "./components/vocabulary-filters"
@@ -12,44 +13,52 @@ import { VocabularyPagination } from "./components/vocabulary-pagination"
 const ITEMS_PER_PAGE = 10
 
 export function VocabularyPage() {
+    const [words, setWords] = useState<Vocabulary[]>([])
+    const [total, setTotal] = useState(0)
+    const [totalPages, setTotalPages] = useState(1)
+    const [isLoading, setIsLoading] = useState(true)
+
     const [search, setSearch] = useState("")
     const [status, setStatus] = useState("all")
     const [date, setDate] = useState("all")
     const [currentPage, setCurrentPage] = useState(1)
 
-    const filteredWords = words.filter((word) => {
-        const matchesSearch =
-            `${word.chinese} ${word.pinyin} ${word.meaning}`
-                .toLowerCase()
-                .includes(search.toLowerCase())
+    const fetchWords = useCallback(async () => {
+        try {
+            setIsLoading(true)
+            const res = await getVocabularies({
+                search: search.trim() || undefined,
+                status: status !== "all" ? status : undefined,
+                date: date !== "all" ? date : undefined,
+                page: currentPage,
+                limit: ITEMS_PER_PAGE,
+            })
 
-        const matchesStatus =
-            status === "all" ||
-            (status === "new" && word.status === "new") ||
-            (status === "learning" && word.status === "learning")
+            setWords(res.data)
+            setTotal(res.pagination.total_items)
+            setTotalPages(res.pagination.total_pages || 1)
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Không thể tải danh sách từ vựng"
+            toast.error(message)
+        } finally {
+            setIsLoading(false)
+        }
+    }, [search, status, date, currentPage])
 
-        const matchesDate =
-            date === "all" ||
-            word.createdAt === date
+    useEffect(() => {
+        fetchWords()
+    }, [fetchWords])
 
-        return (
-            matchesSearch &&
-            matchesStatus &&
-            matchesDate
-        )
-    })
-
-    const totalPages = Math.ceil(
-        filteredWords.length / ITEMS_PER_PAGE
-    )
-
-    const startIndex =
-        (currentPage - 1) * ITEMS_PER_PAGE
-
-    const paginatedWords = filteredWords.slice(
-        startIndex,
-        startIndex + ITEMS_PER_PAGE
-    )
+    const handleDelete = async (id: number) => {
+        try {
+            await deleteVocabulary(id)
+            toast.success("Đã xóa từ vựng thành công!")
+            fetchWords()
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Không thể xóa từ vựng"
+            toast.error(message)
+        }
+    }
 
     const clearFilters = () => {
         setSearch("")
@@ -60,7 +69,7 @@ export function VocabularyPage() {
 
     return (
         <main className="mx-auto flex w-full max-w-5xl flex-col gap-5 p-4 md:p-6">
-            <VocabularyHeader />
+            <VocabularyHeader onAddSuccess={fetchWords} />
 
             <VocabularyFilters
                 search={search}
@@ -82,15 +91,20 @@ export function VocabularyPage() {
             />
 
             <VocabularyList
-                words={paginatedWords}
-                total={filteredWords.length}
+                words={words}
+                total={total}
+                isLoading={isLoading}
+                onDelete={handleDelete}
+                onUpdate={fetchWords}
             />
 
-            <VocabularyPagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
+            {totalPages > 1 && (
+                <VocabularyPagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+            )}
         </main>
     )
 }

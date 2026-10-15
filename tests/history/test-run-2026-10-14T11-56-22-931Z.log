@@ -1,0 +1,43 @@
+================================================================================
+CHI-NEX TEST RUN REPORT
+Thời gian chạy: 18:56:24 14/10/2026
+Trạng thái: PASSED (THÀNH CÔNG)
+================================================================================
+
+?   	github.com/duycao04/chinese-vocab/apps/api/cmd/migrate	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/cmd/server	[no test files]
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/database	[no test files]
+=== RUN   TestAuthMiddleware
+--- PASS: TestAuthMiddleware (0.00s)
+PASS
+ok  	github.com/duycao04/chinese-vocab/apps/api/internal/middleware	(cached)
+=== RUN   TestAuthHandler_Logout
+--- PASS: TestAuthHandler_Logout (0.00s)
+=== RUN   TestAuthHandler_Me_Unauthorized
+--- PASS: TestAuthHandler_Me_Unauthorized (0.00s)
+=== RUN   TestTokenService_GenerateAndValidate
+--- PASS: TestTokenService_GenerateAndValidate (0.00s)
+PASS
+ok  	github.com/duycao04/chinese-vocab/apps/api/internal/modules/auth	(cached)
+=== RUN   TestCalculateSRS
+=== RUN   TestCalculateSRS/Rating_1_-_Hard_resets_repetitions
+=== RUN   TestCalculateSRS/Rating_2_-_Good_progresses_interval
+=== RUN   TestCalculateSRS/Rating_3_-_Easy_accelerates_learning
+--- PASS: TestCalculateSRS (0.00s)
+    --- PASS: TestCalculateSRS/Rating_1_-_Hard_resets_repetitions (0.00s)
+    --- PASS: TestCalculateSRS/Rating_2_-_Good_progresses_interval (0.00s)
+    --- PASS: TestCalculateSRS/Rating_3_-_Easy_accelerates_learning (0.00s)
+=== RUN   TestReviewService_GetPracticeCards
+--- PASS: TestReviewService_GetPracticeCards (0.00s)
+=== RUN   TestReviewService_SubmitReview
+--- PASS: TestReviewService_SubmitReview (0.00s)
+PASS
+ok  	github.com/duycao04/chinese-vocab/apps/api/internal/modules/review	(cached)
+?   	github.com/duycao04/chinese-vocab/apps/api/internal/modules/user	[no test files]
+=== RUN   TestVocabularyHandler_Unauthorized
+--- PASS: TestVocabularyHandler_Unauthorized (0.00s)
+=== RUN   TestVocabularyHandler_Validation
+--- PASS: TestVocabularyHandler_Validation (0.00s)
+PASS
+ok  	github.com/duycao04/chinese-vocab/apps/api/internal/modules/vocabulary	(cached)
+?   	github.com/duycao04/chinese-vocab/apps/api/lib	[no test files]

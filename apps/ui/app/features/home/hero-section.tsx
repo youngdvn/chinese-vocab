@@ -1,8 +1,18 @@
-import { Button } from "@workspace/ui/components/button";
-import { Progress } from "@workspace/ui/components/progress";
-import Link from "next/link";
+import { Button } from "@workspace/ui/components/button"
+import { Progress } from "@workspace/ui/components/progress"
+import Link from "next/link"
+import type { DailyProgress } from "@/types/dashboard.types"
 
-export default function HeroSection() {
+interface HeroSectionProps {
+    progress?: DailyProgress | null
+}
+
+export function HeroSection({ progress }: HeroSectionProps) {
+    const dailyGoal = progress?.daily_goal ?? 20
+    const learnedToday = progress?.learned_today ?? 0
+    const remainingToday = progress?.remaining_today ?? Math.max(0, dailyGoal - learnedToday)
+    const progressPercent = progress?.progress_percentage ?? (dailyGoal > 0 ? (learnedToday / dailyGoal) * 100 : 0)
+
     return (
         <section className="relative overflow-hidden rounded-xl border bg-card p-5 shadow-sm">
             <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
@@ -11,56 +21,59 @@ export default function HeroSection() {
                 <div className="flex items-start justify-between">
                     <div>
                         <p className="text-sm text-muted-foreground">
-                            今日学习
+                            今日学习 • Học hôm nay
                         </p>
 
                         <h1 className="mt-1 text-2xl font-bold tracking-tight">
-                            Today&apos;s Focus
+                            Mục tiêu hôm nay
                         </h1>
 
                         <p className="mt-1 text-sm text-muted-foreground">
-                            Keep your learning streak going.
+                            Duy trì chuỗi ngày học tập và ôn luyện kiên trì.
                         </p>
                     </div>
 
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-lg">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-lg font-bold text-primary">
                         学
                     </div>
                 </div>
+
                 <div className="rounded-xl bg-muted/50 p-4">
                     <div className="flex items-end justify-between">
                         <div>
                             <p className="text-xs text-muted-foreground">
-                                Daily goal
+                                Tiến độ hàng ngày
                             </p>
 
                             <p className="mt-1 text-2xl font-bold">
-                                15
+                                {learnedToday}
                                 <span className="text-sm font-normal text-muted-foreground">
                                     {" "}
-                                    / 20 words
+                                    / {dailyGoal} từ
                                 </span>
                             </p>
                         </div>
 
                         <span className="text-sm font-medium text-primary">
-                            75%
+                            {Math.round(progressPercent)}%
                         </span>
                     </div>
 
                     <Progress
-                        value={75}
+                        value={progressPercent}
                         className="mt-3 h-2"
                     />
 
                     <p className="mt-2 text-xs text-muted-foreground">
-                        5 words left to reach today&apos;s goal
+                        {remainingToday > 0
+                            ? `Còn ${remainingToday} từ nữa để hoàn thành mục tiêu hôm nay`
+                            : "🎉 Bạn đã xuất sắc hoàn thành mục tiêu học hôm nay!"}
                     </p>
                 </div>
 
-                <Link href={"/vocabulary"}>
+                <Link href={"/practice"}>
                     <Button className="w-full">
-                        Continue Learning
+                        Bắt đầu ôn tập Flashcard
                     </Button>
                 </Link>
             </div>
