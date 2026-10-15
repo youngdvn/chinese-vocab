@@ -93,10 +93,10 @@ export default function PinyinPracticePage() {
         if (correct) {
             setScore((s) => s + 1)
             toast.success("Chính xác! Giỏi lắm 🎉")
-            submitReview({ vocabulary_id: currentWord.id, rating: 2 }).catch(() => {})
+            submitReview({ vocabulary_id: currentWord.id, rating: 2 }).catch(() => { })
         } else {
             toast.error(`Chưa đúng rồi! Pinyin chuẩn là: ${currentWord.pinyin}`)
-            submitReview({ vocabulary_id: currentWord.id, rating: 1 }).catch(() => {})
+            submitReview({ vocabulary_id: currentWord.id, rating: 1 }).catch(() => { })
         }
     }
 
@@ -199,7 +199,7 @@ export default function PinyinPracticePage() {
             <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
                 <PracticeNav />
                 <EmptyState
-                    icon={<IconKeyboard size={28} />}
+                    // icon={<IconKeyboard size={28} />}
                     title="Chưa có từ vựng để luyện gõ Pinyin"
                     description="Hãy thêm các từ vựng mới vào kho từ để bắt đầu luyện phản xạ gõ phiên âm tiếng Trung."
                     action={
@@ -277,13 +277,12 @@ export default function PinyinPracticePage() {
                         }}
                         disabled={isEvaluated}
                         autoFocus
-                        className={`h-12 text-center text-lg font-medium transition-all ${
-                            isEvaluated
+                        className={`h-12 text-center text-lg font-medium transition-all ${isEvaluated
                                 ? isCorrect
                                     ? "border-emerald-500 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
                                     : "border-destructive bg-destructive/10 text-destructive"
                                 : ""
-                        }`}
+                            }`}
                     />
                 </div>
 

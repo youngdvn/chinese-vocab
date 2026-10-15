@@ -80,7 +80,7 @@ export function DailyProgress({ progress }: DailyProgressProps) {
                 </div>
             ) : (
                 <EmptyState
-                    icon={<IconPlus size={24} />}
+                    // icon={<IconPlus size={24} />}
                     title="Chưa có từ vựng nào trong danh sách hôm nay"
                     description="Hãy thêm từ vựng mới vào kho từ để bắt đầu học và tích luỹ tiến độ mỗi ngày!"
                     action={

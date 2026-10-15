@@ -64,7 +64,7 @@ export function VocabularyList({
 
             {words.length === 0 && (
                 <EmptyState
-                    icon={<IconBook2 size={24} />}
+                    // icon={<IconBook2 size={24} />}
                     title="Không tìm thấy từ vựng nào"
                     description="Hãy thử tìm kiếm với từ khóa khác hoặc thêm từ vựng mới vào kho từ cá nhân của bạn."
                 />

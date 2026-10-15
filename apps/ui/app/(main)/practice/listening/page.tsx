@@ -239,7 +239,7 @@ export default function ListeningPracticePage() {
             <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
                 <PracticeNav />
                 <EmptyState
-                    icon={<IconHeadphones size={28} />}
+                    // icon={<IconHeadphones size={28} />}
                     title="Chưa có từ vựng để tạo bài luyện nghe"
                     description="Hãy thêm ít nhất 4 từ vựng vào kho từ để hệ thống có thể phát âm và tạo câu hỏi luyện nghe cho bạn."
                     action={

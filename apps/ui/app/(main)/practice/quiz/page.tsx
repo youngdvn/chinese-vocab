@@ -243,7 +243,7 @@ export default function QuizPage() {
             <main className="mx-auto flex min-h-[calc(100vh-56px)] w-full max-w-xl flex-col gap-4 px-4 py-4">
                 <PracticeNav />
                 <EmptyState
-                    icon={<IconHelpCircle size={28} />}
+                    // icon={<IconHelpCircle size={28} />}
                     title="Chưa có từ vựng để tạo bài Quiz"
                     description="Hãy thêm ít nhất 4 từ vựng vào kho từ để hệ thống có thể tạo các câu hỏi trắc nghiệm ôn tập cho bạn."
                     action={

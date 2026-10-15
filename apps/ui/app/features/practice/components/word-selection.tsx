@@ -204,7 +204,7 @@ export function WordSelection({ onStart }: WordSelectionProps) {
             {/* Word list */}
             {filtered.length === 0 ? (
                 <EmptyState
-                    icon={<IconSearch size={24} />}
+                    // icon={<IconSearch size={24} />}
                     title="Không tìm thấy từ nào phù hợp"
                     description={
                         allWords.length === 0
