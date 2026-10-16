@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from "react"
-import { IconBook2, IconDownload, IconSparkles } from "@tabler/icons-react"
+import { IconDownload, IconSparkles } from "@tabler/icons-react"
 import { Badge } from "@workspace/ui/components/badge"
 import { starterPacks } from "@/constant/starter-packs"
 import { StarterPacksDialog } from "@/app/features/vocabulary/components/starter-packs-dialog"
@@ -9,7 +8,7 @@ import { StarterPacksDialog } from "@/app/features/vocabulary/components/starter
 export function StarterPacksSection() {
     return (
         <section className="flex flex-col gap-3.5 px-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-3 justify-between">
                 <div>
                     <div className="flex items-center gap-2">
                         <IconSparkles size={18} className="text-primary" />
@@ -25,11 +24,11 @@ export function StarterPacksSection() {
                 <StarterPacksDialog />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 gap-3">
                 {starterPacks.map((pack) => (
                     <div
                         key={pack.id}
-                        className="group flex flex-col justify-between rounded-2xl border border-border/70 bg-gradient-to-b from-card/80 to-card/40 p-4 shadow-xs backdrop-blur-xs transition-all duration-200 hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5"
+                        className="group flex flex-col justify-between rounded-2xl border border-border/70 bg-linear-to-b from-card/80 to-card/40 p-4 shadow-xs backdrop-blur-xs transition-all duration-200 hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5"
                     >
                         <div>
                             <div className="flex items-center justify-between mb-2">
