@@ -11,7 +11,6 @@ import {
     DialogContent,
     DialogDescription,
     DialogHeader,
-    DialogTitle,
     DialogTrigger,
 } from "@workspace/ui/components/dialog"
 import { Button } from "@workspace/ui/components/button"
@@ -91,12 +90,9 @@ export function StarterPacksDialog({ onSuccess, trigger }: StarterPacksDialogPro
                 )}
             </DialogTrigger>
 
-            <DialogContent className="max-w-2xl max-h-[88vh] flex flex-col p-4 sm:p-6 overflow-hidden">
+            <DialogContent className="max-w-md max-h-[88vh] flex flex-col p-4 overflow-hidden">
                 <DialogHeader className="pb-3 border-b">
-                    <div className="flex items-center gap-2">
-                        <div className="flex size-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                            <IconSparkles size={20} />
-                        </div>
+                    <div className="flex flex-col items-center gap-2">
                         <div>
                             <Label className="text-lg font-bold">
                                 Bộ từ vựng cho người mới bắt đầu
@@ -119,9 +115,9 @@ export function StarterPacksDialog({ onSuccess, trigger }: StarterPacksDialogPro
                     </div>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 flex-1 min-h-0 pt-2 overflow-hidden">
+                <div className="grid grid-cols-1 gap-4 flex-1 min-h-0 pt-2 overflow-hidden">
                     {/* Pack List Tabs */}
-                    <div className="sm:col-span-5 flex flex-col gap-2 overflow-y-auto max-h-55 sm:max-h-95 pr-1">
+                    <div className="flex flex-col gap-2 overflow-y-auto max-h-95 pr-1">
                         {starterPacks.map((pack) => {
                             const isSelected = selectedPack.id === pack.id
                             return (
@@ -154,7 +150,7 @@ export function StarterPacksDialog({ onSuccess, trigger }: StarterPacksDialogPro
                     </div>
 
                     {/* Pack Detail & Word Preview */}
-                    <div className="sm:col-span-7 flex flex-col border rounded-xl bg-card/40 p-3 min-h-0 overflow-hidden">
+                    <div className="flex flex-col border rounded-xl bg-card/40 p-3 min-h-0 overflow-hidden">
                         <div className="flex items-center justify-between pb-2 border-b">
                             <div>
                                 <h4 className="font-bold text-sm text-foreground">
@@ -189,12 +185,12 @@ export function StarterPacksDialog({ onSuccess, trigger }: StarterPacksDialogPro
                         </div>
 
                         {/* Actions */}
-                        <div className="pt-3 border-t mt-auto flex flex-col sm:flex-row gap-2">
+                        <div className="pt-3 border-t mt-auto flex">
                             <Button
                                 type="button"
                                 onClick={() => handleImportPack(selectedPack)}
                                 disabled={isImporting}
-                                className="flex-1 gap-2 rounded-xl text-xs font-semibold h-9"
+                                className="flex-1 gap-2 rounded-xl text-xs font-semibold "
                             >
                                 <IconDownload size={15} />
                                 <span>Thêm vào kho từ ({selectedPack.words.length} từ)</span>
